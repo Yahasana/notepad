@@ -10,26 +10,26 @@
 ; Inno Setup: http://www.jrsoftware.org/isdl.php
 
 
-;#define ICL12
+;#define ICL13
 ;#define VS2010
 ;#define VS2012
 ;#define WDK
 
 ; Preprocessor related stuff
-#if VER < EncodeVer(5,5,1)
-  #error Update your Inno Setup version (5.5.1 or newer)
+#if VER < EncodeVer(5,5,2)
+  #error Update your Inno Setup version (5.5.2 or newer)
 #endif
 
-#if !defined(ICL12) && !defined(VS2010) && !defined(VS2012) && !defined(WDK)
-  #error You need to define the compiler used; ICL12, VS2010, VS2012 or WDK
+#if !defined(ICL13) && !defined(VS2010) && !defined(VS2012) && !defined(WDK)
+  #error You need to define the compiler used; ICL13, VS2010, VS2012 or WDK
 #endif
 
-#if defined(ICL12) && (defined(VS2010) || defined(VS2012) || defined(WDK)) || defined(VS2010) && (defined(VS2012) || defined(WDK)) || defined(VS2012) && defined(WDK)
+#if defined(ICL13) && (defined(VS2010) || defined(VS2012) || defined(WDK)) || defined(VS2010) && (defined(VS2012) || defined(WDK)) || defined(VS2012) && defined(WDK)
   #error You can't use two or more compiler defines at the same time
 #endif
 
-#if defined(ICL12)
-  #define compiler "ICL12"
+#if defined(ICL13)
+  #define compiler "ICL13"
   #define sse2_required
 #elif defined(VS2010)
   #define compiler "VS2010"
@@ -106,8 +106,6 @@ DisableWelcomePage=yes
 AllowCancelDuringInstall=no
 #if defined(WDK)
 MinVersion=5.0
-#elif defined(VS2012)
-MinVersion=6.0
 #else
 MinVersion=5.1.2600sp3
 #endif
