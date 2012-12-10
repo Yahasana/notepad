@@ -59,8 +59,8 @@ SET INPUTDIRx64=bin\%COMPILER%\Release_x64
 IF NOT "%COMPILER%" == "WDK" SET SUFFIX=_%COMPILER%
 SET "TEMP_NAME=temp_zip%SUFFIX%"
 
-IF NOT EXIST "..\%INPUTDIRx86%\Notepad2.exe" CALL :SUBMSG "ERROR" "Compile Notepad2 x86 first!"
-IF NOT EXIST "..\%INPUTDIRx64%\Notepad2.exe" CALL :SUBMSG "ERROR" "Compile Notepad2 x64 first!"
+IF NOT EXIST "..\%INPUTDIRx86%\notepad.exe" CALL :SUBMSG "ERROR" "Compile Notepad2 x86 first!"
+IF NOT EXIST "..\%INPUTDIRx64%\notepad.exe" CALL :SUBMSG "ERROR" "Compile Notepad2 x64 first!"
 
 CALL :SubGetVersion
 
@@ -107,13 +107,13 @@ IF EXIST "%TEMP_NAME%"     RD /S /Q "%TEMP_NAME%"
 IF NOT EXIST "%TEMP_NAME%" MD "%TEMP_NAME%"
 IF NOT EXIST "packages"    MD "packages"
 
-FOR %%A IN ("..\License.txt" "..\%1\Notepad2.exe"^
+FOR %%A IN ("..\License.txt" "..\%1\notepad.exe"^
  "..\distrib\Notepad2.ini" "..\Notepad2.txt" "..\Readme-mod.txt"
 ) DO COPY /Y /V "%%A" "%TEMP_NAME%\"
 
 PUSHD "%TEMP_NAME%"
 START "" /B /WAIT "..\..\distrib\7za.exe" a -tzip -mx=9^
- "%ZIP_NAME%.zip" "License.txt" "Notepad2.exe"^
+ "%ZIP_NAME%.zip" "License.txt" "notepad.exe"^
  "Notepad2.ini" "Notepad2.txt" "Readme-mod.txt" >NUL
 IF %ERRORLEVEL% NEQ 0 CALL :SUBMSG "ERROR" "Compilation failed!"
 

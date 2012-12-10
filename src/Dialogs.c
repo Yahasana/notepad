@@ -402,8 +402,8 @@ INT_PTR CALLBACK RunDlgProc(HWND hwnd,UINT umsg,WPARAM wParam,LPARAM lParam)
               ExpandEnvironmentStringsEx(arg1,COUNTOF(arg1));
               ExtractFirstArgument(arg1,arg1,arg2);
 
-              if (lstrcmpi(arg1,L"notepad2") == 0 ||
-                  lstrcmpi(arg1,L"notepad2.exe") == 0) {
+              if (lstrcmpi(arg1,L"notepad") == 0 ||
+                  lstrcmpi(arg1,L"notepad.exe") == 0) {
                 GetModuleFileName(NULL,arg1,COUNTOF(arg1));
                 bQuickExit = TRUE;
               }

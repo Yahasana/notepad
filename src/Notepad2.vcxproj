@@ -75,6 +75,7 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateManifest>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">notepad</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -315,7 +316,7 @@
     <None Include="Notepad2.ver" />
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\res\Notepad2.exe.manifest" />
+    <Manifest Include="..\res\notepad.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Notepad2.rc" />

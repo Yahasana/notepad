@@ -51,7 +51,7 @@ BEGIN
       VALUE "FileVersion",      VERSION_FILEVERSION
       VALUE "ProductVersion",   VERSION_FILEVERSION
       VALUE "LegalCopyright",   VERSION_LEGALCOPYRIGHT_LONG
-      VALUE "OriginalFilename", "Notepad2.exe"
+      VALUE "OriginalFilename", "notepad.exe"
     END
   END
   BLOCK "VarFileInfo"

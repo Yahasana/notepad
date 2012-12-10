@@ -29,7 +29,7 @@ BINDIR = ..\bin\WDK\Release_x64
 BINDIR = ..\bin\WDK\Release_x86
 !ENDIF
 OBJDIR = $(BINDIR)\obj
-EXE    = $(BINDIR)\Notepad2.exe
+EXE    = $(BINDIR)\notepad.exe
 SCI_LIB_TARGET = $(OBJDIR)\scintilla\scintilla.lib
 
 
