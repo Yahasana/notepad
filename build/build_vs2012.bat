@@ -8,7 +8,7 @@ rem *   Batch file used to build Notepad2 with MSVC2012
 rem *
 rem * See License.txt for details about distribution and modification.
 rem *
-rem *                                       (c) XhmikosR 2010-2012
+rem *                                       (c) XhmikosR 2010-2013
 rem *                                       https://github.com/XhmikosR/notepad2-mod
 rem *
 rem ******************************************************************************
@@ -116,9 +116,7 @@ IF "%ARCH%" == "x86" GOTO END
 
 
 :x64
-IF DEFINED PROGRAMFILES(x86) (SET build_type=amd64) ELSE (SET build_type=x86_amd64)
-
-CALL "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %build_type%
+CALL "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" x86_amd64
 
 IF "%CONFIG%" == "all" (CALL :SUBMSVC %BUILDTYPE% Debug x64 && CALL :SUBMSVC %BUILDTYPE% Release x64) ELSE (CALL :SUBMSVC %BUILDTYPE% %CONFIG% x64)
 
@@ -132,9 +130,8 @@ EXIT /B
 :SUBMSVC
 ECHO.
 TITLE Building Notepad2-mod with MSVC2012 - %~1 "%~2|%~3"...
-"%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" /nologo Notepad2_VS2012.sln^
- /t:%~1 /p:Configuration=%~2;Platform=%~3 /consoleloggerparameters:Verbosity=minimal^
- /maxcpucount /nodeReuse:true
+"MSBuild.exe" /nologo Notepad2.sln /t:%~1 /p:Configuration=%~2;Platform=%~3^
+ /consoleloggerparameters:Verbosity=minimal /maxcpucount /nodeReuse:true
 IF %ERRORLEVEL% NEQ 0 CALL :SUBMSG "ERROR" "Compilation failed!"
 EXIT /B
 
