@@ -492,7 +492,7 @@ EDITLEXER lexCS = { SCLEX_CPP, 63005, L"C# Source Code", L"cs", L"", &KeyWords_C
                     //{ SCE_C_UUID, L"UUID", L"", L"" },
                     //{ SCE_C_REGEX, L"Regex", L"", L"" },
                     //{ SCE_C_WORD2, L"Word 2", L"", L"" },
-                    { SCE_C_GLOBALCLASS, 63338, L"Global Class", L"fore:#2B91AF", L"" },
+                    { SCE_C_GLOBALCLASS, 63337, L"Global Class", L"fore:#2B91AF", L"" },
                     { -1, 00000, L"", L"", L"" } } };
 
 
@@ -1780,11 +1780,11 @@ EDITLEXER lexAVS = { SCLEX_AVS, 63332, L"AviSynth Script", L"avs; avsi", L"", &K
                      { SCE_AVS_OPERATOR, 63132, L"Operator", L"", L"" },
                      { MULTI_STYLE(SCE_AVS_STRING,SCE_AVS_TRIPLESTRING,0,0), 63131, L"String", L"fore:#7F007F", L"" },
                      { SCE_AVS_NUMBER, 63130, L"Number", L"fore:#007F7F", L"" },
-                     { SCE_AVS_KEYWORD, 63333, L"Keywords", L"fore:#00007F; bold", L"" },
-                     { SCE_AVS_FILTER, 63334, L"Filter", L"fore:#00007F; bold", L"" },
-                     { SCE_AVS_PLUGIN, 63335, L"Plugin", L"fore:#0080C0; bold", L"" },
+                     { SCE_AVS_KEYWORD, 63128, L"Keyword", L"fore:#00007F; bold", L"" },
+                     { SCE_AVS_FILTER, 63333, L"Filter", L"fore:#00007F; bold", L"" },
+                     { SCE_AVS_PLUGIN, 63334, L"Plugin", L"fore:#0080C0; bold", L"" },
                      { SCE_AVS_FUNCTION, 63277, L"Function", L"fore:#007F7F", L"" },
-                     { SCE_AVS_CLIPPROP, 63337, L"Clip property", L"fore:#00007F", L"" },
+                     { SCE_AVS_CLIPPROP, 63335, L"Clip property", L"fore:#00007F", L"" },
                      //{ SCE_AVS_USERDFN, 63106, L"User Defined", L"fore:#8000FF", L"" },
                      { -1, 00000, L"", L"", L"" } } };
 
@@ -1796,10 +1796,9 @@ KEYWORDLIST KeyWords_MARKDOWN = {
 EDITLEXER lexMARKDOWN = { SCLEX_MARKDOWN, 63336, L"Markdown", L"md; markdown; mdown; mkdn; mkd", L"", &KeyWords_MARKDOWN, {
                           { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
                           //{ SCE_MARKDOWN_DEFAULT, L"Default", L"", L"" },
-                          { SCE_MARKDOWN_LINE_BEGIN, 63337, L"Line Begin", L"", L"" },
-                          { MULTI_STYLE(SCE_MARKDOWN_STRONG1,SCE_MARKDOWN_STRONG2,0,0), 63338, L"Strong", L"bold", L"" },
-                          { SCE_MARKDOWN_EM1, 63339, L"EM1", L"italic", L"" },
-                          { SCE_MARKDOWN_EM2, 63340, L"EM2", L"italic", L"" },
+                          { SCE_MARKDOWN_LINE_BEGIN, 63338, L"Line Begin", L"", L"" },
+                          { MULTI_STYLE(SCE_MARKDOWN_STRONG1,SCE_MARKDOWN_STRONG2,0,0), 63339, L"Strong", L"bold", L"" },
+                          { MULTI_STYLE(SCE_MARKDOWN_EM1,SCE_MARKDOWN_EM2,0,0), 63340, L"Emphasis", L"italic", L"" },
                           { SCE_MARKDOWN_HEADER1, 63341, L"Header 1", L"fore:#FF0088; bold", L"" },
                           { SCE_MARKDOWN_HEADER2, 63342, L"Header 2", L"fore:#FF0088; bold", L"" },
                           { SCE_MARKDOWN_HEADER3, 63343, L"Header 3", L"fore:#FF0088; bold", L"" },
@@ -1807,16 +1806,32 @@ EDITLEXER lexMARKDOWN = { SCLEX_MARKDOWN, 63336, L"Markdown", L"md; markdown; md
                           { SCE_MARKDOWN_HEADER5, 63345, L"Header 5", L"fore:#FF0088; bold", L"" },
                           { SCE_MARKDOWN_HEADER6, 63346, L"Header 6", L"fore:#FF0088; bold", L"" },
                           { SCE_MARKDOWN_PRECHAR, 63347, L"Pre char", L"fore:#00007F", L"" },
-                          { SCE_MARKDOWN_ULIST_ITEM, 63348, L"Ulist", L"fore:#0080FF; bold", L"" },
-                          { SCE_MARKDOWN_OLIST_ITEM, 63349, L"Olist", L"fore:#0080FF; bold", L"" },
+                          { SCE_MARKDOWN_ULIST_ITEM, 63348, L"Unordered list", L"fore:#0080FF; bold", L"" },
+                          { SCE_MARKDOWN_OLIST_ITEM, 63349, L"Ordered list", L"fore:#0080FF; bold", L"" },
                           { SCE_MARKDOWN_BLOCKQUOTE, 63350, L"Block quote", L"fore:#00007F", L"" },
                           { SCE_MARKDOWN_STRIKEOUT, 63351, L"Strikeout", L"", L"" },
-                          { SCE_MARKDOWN_HRULE, 63352, L"HRULE", L"bold", L"" },
+                          { SCE_MARKDOWN_HRULE, 63352, L"Horizontal rule", L"bold", L"" },
                           { SCE_MARKDOWN_LINK, 63353, L"Link", L"fore:#0000FF", L"" },
-                          { MULTI_STYLE(SCE_MARKDOWN_CODE,SCE_MARKDOWN_CODE2,0,0), 63354, L"Code", L"fore:#00007F; back:#EBEBEB", L"" },
-                          { SCE_MARKDOWN_CODEBK, 63355, L"Code Block", L"fore:#00007F; back:#EBEBEB", L"" },
+                          { MULTI_STYLE(SCE_MARKDOWN_CODE,SCE_MARKDOWN_CODE2,SCE_MARKDOWN_CODEBK,0), 63354, L"Code", L"fore:#00007F; back:#EBEBEB", L"" },
                           { -1, 00000, L"", L"", L"" } } };
 
+
+KEYWORDLIST KeyWords_YAML = {
+"y n yes no on off true false", "", "", "", "", "", "", "", "" };
+
+EDITLEXER lexYAML = { SCLEX_YAML, 63355, L"YAML", L"yaml; yml", L"", &KeyWords_YAML, {
+                      { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
+                      //{ SCE_YAML_DEFAULT, L"Default", L"", L"" },
+                      { SCE_YAML_COMMENT, 63127, L"Comment", L"fore:#008800", L"" },
+                      { SCE_YAML_IDENTIFIER, 63129, L"Identifier", L"bold; fore:#0A246A", L"" },
+                      { SCE_YAML_KEYWORD, 63128, L"Keyword", L"fore:#880088", L"" },
+                      { SCE_YAML_NUMBER, 63130, L"Number", L"fore:#FF8000", L"" },
+                      { SCE_YAML_REFERENCE, 63356, L"Reference", L"fore:#008888", L"" },
+                      { SCE_YAML_DOCUMENT, 63357, L"Document", L"fore:#FFFFFF; bold; back:#000088; eolfilled", L"" },
+                      { SCE_YAML_TEXT, 63358, L"Text", L"fore:#404040", L"" },
+                      { SCE_YAML_ERROR, 63359, L"Error", L"fore:#FFFFFF; bold; italic; back:#FF0000; eolfilled", L"" },
+                      { SCE_YAML_OPERATOR, 63132, L"Operator", L"fore:#333366", L"" },
+                      { -1, 00000, L"", L"", L"" } } };
 
 // This array holds all the lexers...
 // Don't forget to change the number of the lexer for HTML and XML
@@ -1857,7 +1872,8 @@ PEDITLEXER pLexArray[NUMLEXERS] =
   &lexVBS,
   &lexVB,
   &lexHTML,
-  &lexXML
+  &lexXML,
+  &lexYAML
 };
 
 
@@ -2609,6 +2625,8 @@ PEDITLEXER __fastcall Style_SniffShebang(char *pchText)
       return(&lexBASH);
     else if ((pch - pchText) >= 4 && StrCmpNA(pch-4,"ruby",4) == 0)
       return(&lexRUBY);
+    else if ((pch - pchText) >= 4 && StrCmpNA(pch-4,"node",4) == 0)
+      return(&lexJS);
   }
 
   return(NULL);
@@ -2742,6 +2760,18 @@ void Style_SetLexerFromFile(HWND hwnd,LPCWSTR lpszFile)
   if (!bFound && bAutoSelect &&
        lstrcmpi(PathFindFileName(lpszFile),L"makefile") == 0) {
     pLexNew = &lexMAK;
+    bFound = TRUE;
+  }
+
+  if (!bFound && bAutoSelect &&
+       lstrcmpi(PathFindFileName(lpszFile),L"rakefile") == 0) {
+    pLexNew = &lexRUBY;
+    bFound = TRUE;
+  }
+
+  if (!bFound && bAutoSelect &&
+       lstrcmpi(PathFindFileName(lpszFile),L"mozconfig") == 0) {
+    pLexNew = &lexBASH;
     bFound = TRUE;
   }
 

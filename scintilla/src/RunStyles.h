@@ -23,6 +23,8 @@ private:
 	void RemoveRun(int run);
 	void RemoveRunIfEmpty(int run);
 	void RemoveRunIfSameAsPrevious(int run);
+	// Private so RunStyles objects can not be copied
+	RunStyles(const RunStyles &);
 public:
 	RunStyles();
 	~RunStyles();
@@ -41,6 +43,8 @@ public:
 	bool AllSame() const;
 	bool AllSameAs(int value) const;
 	int Find(int value, int start) const;
+
+	void Check();
 };
 
 #ifdef SCI_NAMESPACE

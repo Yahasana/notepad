@@ -80,7 +80,7 @@ public:
 
 	Action();
 	~Action();
-	void Create(actionType at_, int position_=0, char *data_=0, int lenData_=0, bool mayCoalesce_=true);
+	void Create(actionType at_, int position_=0, const char *data_=0, int lenData_=0, bool mayCoalesce_=true);
 	void Destroy();
 	void Grab(Action *source);
 };
@@ -98,11 +98,14 @@ class UndoHistory {
 
 	void EnsureUndoRoom();
 
+	// Private so UndoHistory objects can not be copied
+	UndoHistory(const UndoHistory &);
+
 public:
 	UndoHistory();
 	~UndoHistory();
 
-	void AppendAction(actionType at, int position, char *data, int length, bool &startSequence, bool mayCoalesce=true);
+	void AppendAction(actionType at, int position, const char *data, int length, bool &startSequence, bool mayCoalesce=true);
 
 	void BeginUndoAction();
 	void EndUndoAction();
@@ -136,12 +139,15 @@ private:
 	SplitVector<char> substance;
 	SplitVector<char> style;
 	bool readOnly;
+	int utf8LineEnds;
 
 	bool collectingUndo;
 	UndoHistory uh;
 
 	LineVector lv;
 
+	bool UTF8LineEndOverlaps(int position) const;
+	void ResetLineEnds();
 	/// Actions without undo
 	void BasicInsertString(int position, const char *s, int insertLength);
 	void BasicDeleteChars(int position, int deleteLength);
@@ -162,6 +168,8 @@ public:
 
 	int Length() const;
 	void Allocate(int newSize);
+	int GetLineEndTypes() const { return utf8LineEnds; }
+	void SetLineEndTypes(int utf8LineEnds_);
 	void SetPerLine(PerLine *pl);
 	int Lines() const;
 	int LineStart(int line) const;

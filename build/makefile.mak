@@ -7,7 +7,7 @@
 #*
 #* See License.txt for details about distribution and modification.
 #*
-#*                                       (c) XhmikosR 2010-2012
+#*                                       (c) XhmikosR 2010-2013
 #*                                       https://github.com/XhmikosR/notepad2-mod
 #*
 #* Use build_wdk.bat and set there your WDK directory.
@@ -51,7 +51,8 @@ NP2_RES        = ..\res
 
 
 DEFINES       = /D "_WINDOWS" /D "NDEBUG" /D "_UNICODE" /D "UNICODE" /D "_STL70_" \
-                /D "_STATIC_CPPLIB" /D "_CRT_SECURE_NO_WARNINGS" /D "BOOKMARK_EDITION"
+                /D "_STATIC_CPPLIB" /D "_CRT_SECURE_NO_WARNINGS" /D "BOOKMARK_EDITION" \
+                /D "WDK_BUILD"
 INCLUDEDIRS   = /I "$(SCI_INC)" /I "$(SCI_LEX)" /I "$(SCI_LIB)" /I "$(SCI_SRC)" \
                 /I "$(SCI_WIN)"
 CXXFLAGS      = /nologo /c /W3 /WX /EHsc /MD /O2 /GL /MP $(DEFINES) $(INCLUDEDIRS)
@@ -132,6 +133,7 @@ SCI_LEX_OBJ = \
     $(SCI_LEX_OBJDIR)\LexCSS.obj \
     $(SCI_LEX_OBJDIR)\LexHTML.obj \
     $(SCI_LEX_OBJDIR)\LexInno.obj \
+    $(SCI_LEX_OBJDIR)\LexLaTeX.obj \
     $(SCI_LEX_OBJDIR)\LexLua.obj \
     $(SCI_LEX_OBJDIR)\LexMarkdown.obj \
     $(SCI_LEX_OBJDIR)\LexNsis.obj \
@@ -143,7 +145,8 @@ SCI_LEX_OBJ = \
     $(SCI_LEX_OBJDIR)\LexRuby.obj \
     $(SCI_LEX_OBJDIR)\LexSQL.obj \
     $(SCI_LEX_OBJDIR)\LexTCL.obj \
-    $(SCI_LEX_OBJDIR)\LexVB.obj
+    $(SCI_LEX_OBJDIR)\LexVB.obj \
+    $(SCI_LEX_OBJDIR)\LexYAML.obj
 
 SCI_LIB_OBJ = \
     $(SCI_LIB_OBJDIR)\Accessor.obj \

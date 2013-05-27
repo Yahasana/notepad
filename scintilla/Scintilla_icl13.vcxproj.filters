@@ -51,6 +51,9 @@
     <ClCompile Include="lexers\LexInno.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
+    <ClCompile Include="lexers\LexLaTeX.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
     <ClCompile Include="lexers\LexLua.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
@@ -85,6 +88,9 @@
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexVB.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="lexers\LexYAML.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexlib\Accessor.cxx">
@@ -236,6 +242,9 @@
     <ClInclude Include="lexlib\StyleContext.h">
       <Filter>lexlib</Filter>
     </ClInclude>
+    <ClInclude Include="lexlib\SubStyles.h">
+      <Filter>lexlib</Filter>
+    </ClInclude>
     <ClInclude Include="lexlib\WordList.h">
       <Filter>lexlib</Filter>
     </ClInclude>
@@ -306,9 +315,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Style.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SVector.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\UniConversion.h">

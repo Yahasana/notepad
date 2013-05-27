@@ -7,7 +7,7 @@ _A modified version (fork) of Notepad2 based on Kai Liu's and other people's pat
 * Option to mark all occurrences of a word
 * Word auto-completion
 * Syntax highlighting support for AutoHotkey, AutoIt3, AviSynth, Bash, CMake, Inno Setup,
-  LaTeX, Lua, Markdown, NSIS, Ruby, and Tcl scripts
+  LaTeX, Lua, Markdown, NSIS, Ruby, Tcl and YAML scripts
 * Improved support for NFO ANSI art
 * Support for replacing Windows Notepad using a clean, unintrusive registry-based method
 * Other various minor changes and tweaks
@@ -16,7 +16,7 @@ _A modified version (fork) of Notepad2 based on Kai Liu's and other people's pat
 * Windows 2000 (when compiled with WDK, which is the default build)
 * XP (SP3, SP2 might or might not work), Vista, 7 and 8 both 32-bit and 64-bit
 
-## [Screenshots](http://xhmikosr.github.com/notepad2-mod/screenshots)
+## [Screenshots](http://xhmikosr.github.io/notepad2-mod/screenshots)
 
 ## Notes:
 * If you find any bugs or have any suggestions for the implemented lexers (and **not** only)
@@ -35,8 +35,8 @@ _A modified version (fork) of Notepad2 based on Kai Liu's and other people's pat
 * [Code folding usage guide](https://github.com/XhmikosR/notepad2-mod/wiki/Code-Folding-Usage)
 
 ## Changed keyboard shortcuts compared to Notepad2:
-`Ctrl+Alt+F2`       Expand selection to next match.
-`Ctrl+Alt+Shift+F2` Expand selection to previous match.
-`Ctrl+Shift+Enter`  New line with toggled auto indent option.
+* `Ctrl+Alt+F2`       Expand selection to next match.
+* `Ctrl+Alt+Shift+F2` Expand selection to previous match.
+* `Ctrl+Shift+Enter`  New line with toggled auto indent option.
 
-You can use WDK 7.1, MSVC 2012 update 1 or Intel C++ Compiler XE 2013 to build Notepad2-mod.
+You can use WDK 7.1, MSVC 2010, MSVC 2012 Update 1(+) or Intel C++ Compiler XE 2013 to build Notepad2-mod.
