@@ -36,7 +36,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
