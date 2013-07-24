@@ -85,7 +85,7 @@ UninstallDisplayName={#app_name} {#app_version} ({#compiler})
 DefaultDirName={pf}\Notepad2
 LicenseFile=license.txt
 OutputDir=.
-#if defined(WDK)
+#if defined(VS2012)
 OutputBaseFilename={#app_name}.{#app_version}
 #else
 OutputBaseFilename={#app_name}.{#app_version}_{#compiler}
@@ -157,12 +157,12 @@ Name: remove_default;     Description: {cm:tsk_RemoveDefault};     GroupDescript
 
 [Files]
 Source: psvince.dll;                        DestDir: {app};                  Flags: ignoreversion
-Source: ..\License.txt;                     DestDir: {app};                  Flags: ignoreversion
 Source: {#bindir}\Release_x64\Notepad2.exe; DestDir: {app};                  Flags: ignoreversion;                         Check: Is64BitInstallMode()
 Source: {#bindir}\Release_x86\Notepad2.exe; DestDir: {app};                  Flags: ignoreversion;                         Check: not Is64BitInstallMode()
-Source: Notepad2.ini;                       DestDir: {userappdata}\Notepad2; Flags: onlyifdoesntexist uninsneveruninstall
+Source: ..\License.txt;                     DestDir: {app};                  Flags: ignoreversion
 Source: ..\Notepad2.txt;                    DestDir: {app};                  Flags: ignoreversion
 Source: ..\Readme-mod.txt;                  DestDir: {app};                  Flags: ignoreversion
+Source: Notepad2.ini;                       DestDir: {userappdata}\Notepad2; Flags: onlyifdoesntexist uninsneveruninstall
 
 
 [Icons]
