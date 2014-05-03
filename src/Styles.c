@@ -280,7 +280,7 @@ KEYWORDLIST KeyWords_CSS = {
 "speak-header speak-numeral speak-punctuation speech-rate src stemh stemv stress string-set table-layout "
 "target target-name target-new target-position text-align text-align-last text-decoration "
 "text-decoration-color text-decoration-line text-decoration-style text-emphasis text-height text-indent "
-"text-justify text-outline text-replace text-shadow text-transform text-wrap top topline transform "
+"text-justify text-outline text-overflow text-replace text-shadow text-transform text-wrap top topline transform "
 "transform-origin transform-style transition transition-delay transition-duration transition-property "
 "transition-timing-function unicode-bidi unicode-range units-per-em vertical-align visibility "
 "voice-balance voice-duration voice-family voice-pitch voice-pitch-range voice-rate voice-stress "
@@ -344,7 +344,7 @@ EDITLEXER lexCPP = { SCLEX_CPP, 63004, L"C/C++ Source Code", L"c; cpp; cxx; cc; 
                      { MULTI_STYLE(SCE_C_STRING,SCE_C_CHARACTER,SCE_C_STRINGEOL,SCE_C_VERBATIM), 63131, L"String", L"fore:#008000", L"" },
                      { SCE_C_NUMBER, 63130, L"Number", L"fore:#FF0000", L"" },
                      { SCE_C_OPERATOR, 63132, L"Operator", L"fore:#B000B0", L"" },
-                     { SCE_C_PREPROCESSOR, 63133, L"Preprocessor", L"fore:#FF8000", L"" },
+                     { MULTI_STYLE(SCE_C_PREPROCESSOR,SCE_C_PREPROCESSORCOMMENT,SCE_C_PREPROCESSORCOMMENTDOC,0), 63133, L"Preprocessor", L"fore:#FF8000", L"" },
                      //{ SCE_C_UUID, L"UUID", L"", L"" },
                      //{ SCE_C_REGEX, L"Regex", L"", L"" },
                      //{ SCE_C_WORD2, L"Word 2", L"", L"" },
@@ -638,12 +638,16 @@ EDITLEXER lexJS = { SCLEX_CPP, 63010, L"JavaScript", L"js; jse; jsm; json; as", 
 
 
 KEYWORDLIST KeyWords_JAVA = {
-"abstract assert boolean break byte case catch char class const "
-"continue default do double else extends final finally float for future "
+"@interface abstract assert boolean break byte case catch char class const "
+"continue default do double else enum extends final finally float for future "
 "generic goto if implements import inner instanceof int interface long "
 "native new null outer package private protected public rest return "
 "short static super switch synchronized this throw throws transient try "
-"var void volatile while",
+"var void volatile while "
+"@Deprecated @Documented @FlaskyTest @Inherited @JavascriptInterface "
+"@LargeTest @MediumTest @Override @Retention "
+"@SmallTest @Smoke @Supress @SupressLint @SupressWarnings @Target @TargetApi "
+"@TestTarget @TestTargetClass @UiThreadTest",
 "", "", "", "", "", "", "", "" };
 
 
@@ -1248,7 +1252,7 @@ KEYWORDLIST KeyWords_RUBY = {
 "undef unless until when while yield",
 "", "", "", "", "", "", "", "" };
 
-EDITLEXER lexRUBY = { SCLEX_RUBY, 63304, L"Ruby Script", L"rb; ruby; rbw; rake; rjs; Rakefile", L"", &KeyWords_RUBY, {
+EDITLEXER lexRUBY = { SCLEX_RUBY, 63304, L"Ruby Script", L"rb; ruby; rbw; rake; rjs; Rakefile; gemspec", L"", &KeyWords_RUBY, {
                     { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
                     //{ SCE_P_DEFAULT, L"Default", L"", L"" },
                     { MULTI_STYLE(SCE_RB_COMMENTLINE,SCE_P_COMMENTBLOCK,0,0), 63127, L"Comment", L"fore:#008000", L"" },
@@ -2390,6 +2394,39 @@ EDITLEXER lexYAML = { SCLEX_YAML, 63355, L"YAML", L"yaml; yml", L"", &KeyWords_Y
                       { SCE_YAML_OPERATOR, 63132, L"Operator", L"fore:#333366", L"" },
                       { -1, 00000, L"", L"", L"" } } };
 
+KEYWORDLIST KeyWords_VHDL = {
+"access after alias all architecture array assert attribute begin block body buffer bus case component configuration "
+"constant disconnect downto else elsif end entity exit file for function generate generic group guarded if impure in "
+"inertial inout is label library linkage literal loop map new next null of on open others out package port postponed "
+"procedure process pure range record register reject report return select severity shared signal subtype then "
+"to transport type unaffected units until use variable wait when while with",
+"abs and mod nand nor not or rem rol ror sla sll sra srl xnor xor",
+"left right low high ascending image value pos val succ pred leftof rightof base range reverse_range length delayed stable "
+"quiet transaction event active last_event last_active last_value driving driving_value simple_name path_name instance_name",
+"now readline read writeline write endfile resolved to_bit to_bitvector to_stdulogic to_stdlogicvector to_stdulogicvector "
+"to_x01 to_x01z to_UX01 rising_edge falling_edge is_x shift_left shift_right rotate_left rotate_right resize to_integer "
+"to_unsigned to_signed std_match to_01",
+"std ieee work standard textio std_logic_1164 std_logic_arith std_logic_misc std_logic_signed std_logic_textio std_logic_unsigned "
+"numeric_bit numeric_std math_complex math_real vital_primitives vital_timing",
+"boolean bit character severity_level integer real time delay_length natural positive string bit_vector file_open_kind "
+"file_open_status line text side width std_ulogic std_ulogic_vector std_logic std_logic_vector X01 X01Z UX01 UX01Z unsigned signed",
+"", "", "" };
+
+EDITLEXER lexVHDL = { SCLEX_VHDL, 63370, L"VHDL", L"vhdl; vhd", L"", &KeyWords_VHDL, {
+                       { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
+                       { MULTI_STYLE(SCE_VHDL_COMMENTLINEBANG, SCE_VHDL_COMMENT, 0, 0), 63127, L"Comment", L"fore:#008800", L"" },
+                       { SCE_VHDL_NUMBER, 63130, L"Number", L"fore:#FF0000", L"" },
+                       { MULTI_STYLE(SCE_VHDL_STRING, SCE_VHDL_STRINGEOL, 0, 0), 63131, L"String", L"fore:#008000", L"" },
+                       { SCE_VHDL_OPERATOR, 63132, L"Operator", L"fore:#B000B0", L"" },
+                       { SCE_VHDL_IDENTIFIER, 63129, L"Identifier", L"", L"" },
+                       { SCE_VHDL_KEYWORD, 63128, L"Keyword", L"bold; fore:#0A246A", L"" },
+                       { SCE_VHDL_STDOPERATOR, 63371, L"Standard operator", L"bold; fore:#0A246A", L"" },
+                       { SCE_VHDL_ATTRIBUTE, 63372, L"Attribute", L"", L"" },
+                       { SCE_VHDL_STDFUNCTION, 63373, L"Standard function", L"", L"" },
+                       { SCE_VHDL_STDPACKAGE, 63374, L"Standard package", L"", L"" },
+                       { SCE_VHDL_STDTYPE, 63375, L"Standard type", L"fore:#FF8000", L"" },
+                       { -1, 00000, L"", L"", L"" } } };
+
 // This array holds all the lexers...
 // Don't forget to change the number of the lexer for HTML and XML
 // in Notepad2.c ParseCommandLine() if you change this array!
@@ -2430,7 +2467,8 @@ PEDITLEXER pLexArray[NUMLEXERS] =
   &lexVB,
   &lexHTML,
   &lexXML,
-  &lexYAML
+  &lexYAML,
+  &lexVHDL
 };
 
 

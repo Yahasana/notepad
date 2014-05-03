@@ -13,6 +13,7 @@
 ;#define ICL13
 ;#define VS2010
 ;#define VS2012
+;#define VS2013
 ;#define WDK
 
 ; Preprocessor related stuff
@@ -20,8 +21,8 @@
   #error Update your Inno Setup version (5.5.4 or newer)
 #endif
 
-#if !defined(ICL13) && !defined(VS2010) && !defined(VS2012) && !defined(WDK)
-  #error You need to define the compiler used; ICL13, VS2010, VS2012 or WDK
+#if !defined(ICL13) && !defined(VS2010) && !defined(VS2012) && !defined(VS2013) && !defined(WDK)
+  #error You need to define the compiler used; ICL13, VS2010, VS2012, VS2013 or WDK
 #endif
 
 #if defined(ICL13) && (defined(VS2010) || defined(VS2012) || defined(WDK)) || defined(VS2010) && (defined(VS2012) || defined(WDK)) || defined(VS2012) && defined(WDK)
@@ -35,6 +36,8 @@
   #define compiler "VS2010"
 #elif defined(VS2012)
   #define compiler "VS2012"
+#elif defined(VS2013)
+  #define compiler "VS2013"
 #elif defined(WDK)
   #define compiler "WDK"
 #endif
@@ -81,11 +84,15 @@ VersionInfoProductName={#app_name}
 VersionInfoProductVersion={#app_version}
 VersionInfoProductTextVersion={#app_version}
 UninstallDisplayIcon={app}\Notepad2.exe
+#if defined(VS2013)
+UninstallDisplayName={#app_name} {#app_version}
+#else
 UninstallDisplayName={#app_name} {#app_version} ({#compiler})
+#endif
 DefaultDirName={pf}\Notepad2
 LicenseFile=license.txt
 OutputDir=.
-#if defined(VS2012)
+#if defined(VS2013)
 OutputBaseFilename={#app_name}.{#app_version}
 #else
 OutputBaseFilename={#app_name}.{#app_version}_{#compiler}
