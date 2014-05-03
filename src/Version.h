@@ -37,7 +37,7 @@
 #define VERSION_FILEVERSION_NUM      VERSION_MAJOR,VERSION_MINOR,VERSION_BUILD,VERSION_REV
 #define VERSION_FILEVERSION          STRINGIFY(VERSION_MAJOR) "." STRINGIFY(VERSION_MINOR) "." \
                                      STRINGIFY(VERSION_BUILD) "." STRINGIFY(VERSION_REV)
-#define VERSION_FILEVERSION_LONG     L"Notepad 4.2.25"
+
 #define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright ?2004-2013"
 #define VERSION_LEGALCOPYRIGHT_LONG  L"?Florian Balmer 2004-2013"
 #define VERSION_AUTHORNAME           L"Florian Balmer"
@@ -47,13 +47,13 @@
 #define VERSION_MODPAGEDISPLAY       L"http://xhmikosr.github.io/notepad2-mod/"
 
 #if defined(_WIN64)
-   #define VERSION_FILEVERSION_LONG  L"Notepad2-mod (64-bit) " STRINGIFY(VERSION_MAJOR) L"." \
+   #define VERSION_FILEVERSION_LONG  L"Notepad (64-bit) " STRINGIFY(VERSION_MAJOR) L"." \
                                      STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD)  \
-                                     L" r" STRINGIFY(VERSION_REV) L" (" VERSION_HASH L")"
+                                     L" r" STRINGIFY(VERSION_REV)
 #else
-   #define VERSION_FILEVERSION_LONG  L"Notepad2-mod " STRINGIFY(VERSION_MAJOR) L"."         \
+   #define VERSION_FILEVERSION_LONG  L"Notepad " STRINGIFY(VERSION_MAJOR) L"."         \
                                      STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD) \
-                                     L" r" STRINGIFY(VERSION_REV) L" (" VERSION_HASH L")"
+                                     L" r" STRINGIFY(VERSION_REV)
 #endif
 
 // Compiler specific
