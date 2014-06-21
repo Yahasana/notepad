@@ -43,6 +43,14 @@ public:
 		return (start != invalidPosition) && (end != invalidPosition);
 	}
 
+	Position First() const {
+		return (start <= end) ? start : end;
+	}
+
+	Position Last() const {
+		return (start > end) ? start : end;
+	}
+
 	// Is the position within the range?
 	bool Contains(Position pos) const {
 		if (start < end) {
@@ -198,12 +206,14 @@ private:
 	CellBuffer cb;
 	CharClassify charClass;
 	CaseFolder *pcf;
-	char stylingMask;
 	int endStyled;
 	int styleClock;
 	int enteredModification;
 	int enteredStyling;
 	int enteredReadOnlyCount;
+
+	bool insertionSet;
+	std::string insertion;
 
 	std::vector<WatcherWithUserData> watchers;
 
@@ -217,9 +227,6 @@ private:
 public:
 
 	LexInterface *pli;
-
-	int stylingBits;
-	int stylingBitsMask;
 
 	int eolMode;
 	/// Can also be SC_CP_UTF8 to enable UTF-8 mode
@@ -274,7 +281,8 @@ public:
 	void ModifiedAt(int pos);
 	void CheckReadOnly();
 	bool DeleteChars(int pos, int len);
-	bool InsertString(int position, const char *s, int insertLength);
+	int InsertString(int position, const char *s, int insertLength);
+	void ChangeInsertion(const char *s, int length);
 	int SCI_METHOD AddData(char *data, int length);
 	void * SCI_METHOD ConvertToDocument();
 	int Undo();
@@ -296,7 +304,7 @@ public:
 	int GapPosition() const { return cb.GapPosition(); }
 
 	int SCI_METHOD GetLineIndentation(int line);
-	void SetLineIndentation(int line, int indent);
+	int SetLineIndentation(int line, int indent);
 	int GetLineIndentPosition(int line) const;
 	int GetColumn(int position);
 	int CountCharacters(int startPos, int endPos);
@@ -307,8 +315,6 @@ public:
 	void SetReadOnly(bool set) { cb.SetReadOnly(set); }
 	bool IsReadOnly() const { return cb.IsReadOnly(); }
 
-	bool InsertChar(int pos, char ch);
-	bool InsertCString(int position, const char *s);
 	void DelChar(int pos);
 	void DelCharBack(int pos);
 
@@ -359,7 +365,6 @@ public:
 	void SetDefaultCharClasses(bool includeWordClass);
 	void SetCharClasses(const unsigned char *chars, CharClassify::cc newCharClass);
 	int GetCharsOfClass(CharClassify::cc charClass, unsigned char *buffer);
-	void SetStylingBits(int bits);
 	void SCI_METHOD StartStyling(int position, char mask);
 	bool SCI_METHOD SetStyleFor(int length, char style);
 	bool SCI_METHOD SetStyles(int length, const char *styles);
@@ -390,7 +395,7 @@ public:
 	void AnnotationSetStyles(int line, const unsigned char *styles);
 	int AnnotationLines(int line) const;
 	void AnnotationClearAll();
-
+	
 	bool AddWatcher(DocWatcher *watcher, void *userData);
 	bool RemoveWatcher(DocWatcher *watcher, void *userData);
 
