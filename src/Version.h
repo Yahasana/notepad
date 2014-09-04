@@ -28,10 +28,10 @@
 #define DO_STRINGIFY(x) _T(#x)
 #define STRINGIFY(x)    DO_STRINGIFY(x)
 
-#define VERSION_MAJOR   4
-#define VERSION_MINOR   2
-#define VERSION_BUILD   25
-#define VERSION_REV   999
+#define VERSION_MAJOR   2014
+#define VERSION_MINOR   6
+#define VERSION_BUILD   21
+#define VERSION_REV		1428
 
 #define MY_APPNAME                   L"notepad"
 #define VERSION_FILEVERSION_NUM      VERSION_MAJOR,VERSION_MINOR,VERSION_BUILD,VERSION_REV
