@@ -1,6 +1,6 @@
 ;* Notepad2-mod - Installer script
 ;*
-;* Copyright (C) 2010-2013 XhmikosR
+;* Copyright (C) 2010-2014 XhmikosR
 ;*
 ;* This file is part of Notepad2-mod.
 ;*
@@ -10,7 +10,6 @@
 ; Inno Setup: http://www.jrsoftware.org/isdl.php
 
 
-;#define ICL13
 ;#define VS2010
 ;#define VS2012
 ;#define VS2013
@@ -21,18 +20,11 @@
   #error Update your Inno Setup version (5.5.4 or newer)
 #endif
 
-#if !defined(ICL13) && !defined(VS2010) && !defined(VS2012) && !defined(VS2013) && !defined(WDK)
-  #error You need to define the compiler used; ICL13, VS2010, VS2012, VS2013 or WDK
+#if !defined(VS2010) && !defined(VS2012) && !defined(VS2013) && !defined(WDK)
+  #error You need to define the compiler used; VS2010, VS2012, VS2013 or WDK
 #endif
 
-#if defined(ICL13) && (defined(VS2010) || defined(VS2012) || defined(WDK)) || defined(VS2010) && (defined(VS2012) || defined(WDK)) || defined(VS2012) && defined(WDK)
-  #error You can't use two or more compiler defines at the same time
-#endif
-
-#if defined(ICL13)
-  #define compiler "ICL13"
-  #define sse2_required
-#elif defined(VS2010)
+#if defined(VS2010)
   #define compiler "VS2010"
 #elif defined(VS2012)
   #define compiler "VS2012"
@@ -60,7 +52,7 @@
 #expr ParseVersion(bindir + "\Release_x86\Notepad2.exe", VerMajor, VerMinor, VerBuild, VerRevision)
 #define app_version   str(VerMajor) + "." + str(VerMinor) + "." + str(VerBuild) + "." + str(VerRevision)
 #define app_name      "Notepad2-mod"
-#define app_copyright "Copyright © 2004-2013, Florian Balmer et al."
+#define app_copyright "Copyright © 2004-2014, Florian Balmer et al."
 #define quick_launch  "{userappdata}\Microsoft\Internet Explorer\Quick Launch"
 
 
@@ -104,9 +96,7 @@ DisableProgramGroupPage=yes
 DisableReadyPage=yes
 DisableWelcomePage=yes
 AllowCancelDuringInstall=no
-#if defined(ICL13)
-MinVersion=6.0
-#elif defined(WDK)
+#if defined(WDK)
 MinVersion=5.0
 #else
 MinVersion=5.1sp3

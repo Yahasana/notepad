@@ -2869,7 +2869,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
     case IDM_EDIT_SWAP:
       if (SendMessage(hwndEdit,SCI_GETSELECTIONEND,0,0) -
           SendMessage(hwndEdit,SCI_GETSELECTIONSTART,0,0) == 0) {
-        int iNewPos = -1;
+        int iNewPos;
         int iPos = (int)SendMessage(hwndEdit,SCI_GETCURRENTPOS,0,0);
         SendMessage(hwndEdit,SCI_PASTE,0,0);
         iNewPos = (int)SendMessage(hwndEdit,SCI_GETCURRENTPOS,0,0);
@@ -4571,7 +4571,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
     case CMD_WEBACTION1:
     case CMD_WEBACTION2:
       {
-        BOOL  bCmdEnabled = FALSE;
+        BOOL  bCmdEnabled;
         LPWSTR lpszTemplateName;
         WCHAR  szCmdTemplate[256];
         char  mszSelection[512] = { 0 };
@@ -5248,7 +5248,7 @@ LRESULT MsgNotify(HWND hwnd,WPARAM wParam,LPARAM lParam)
             //int iLexer = (int)SendMessage(hwndEdit,SCI_GETLEXER,0,0);
             if (/*iLexer == SCLEX_HTML || iLexer == SCLEX_XML*/ 1)
             {
-              char tchBuf[512];
+              char tchBuf[512] = { 0 };
               char tchIns[516] = "</";
               int  cchIns = 2;
               int  iCurPos = (int)SendMessage(hwndEdit,SCI_GETCURRENTPOS,0,0);
