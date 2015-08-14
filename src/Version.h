@@ -43,7 +43,7 @@
 #define VERSION_WEBPAGEDISPLAY       L"flo's freeware - http://www.flos-freeware.ch"
 #define VERSION_EMAILDISPLAY         L"florian.balmer@gmail.com"
 #define VERSION_COMPANYNAME          L"Florian Balmer et al."
-#define VERSION_MODPAGEDISPLAY       L"http://xhmikosr.github.io/notepad2-mod/"
+#define VERSION_MODPAGEDISPLAY       L"https://xhmikosr.github.io/notepad2-mod/"
 
 #if defined(_WIN64)
    #define VERSION_FILEVERSION_LONG  L"Notepad (64-bit) " STRINGIFY(VERSION_MAJOR) L"." \
@@ -72,7 +72,9 @@
     #endif
 #elif defined(_MSC_VER)
     #if _MSC_VER == 1800
-        #if (_MSC_FULL_VER == 180030723)
+        #if (_MSC_FULL_VER == 180031101)
+            #define VERSION_COMPILER    L"MSVC 2013 Update 4"
+        #elif (_MSC_FULL_VER == 180030723)
             #define VERSION_COMPILER    L"MSVC 2013 Update 3"
         #elif (_MSC_FULL_VER == 180030501)
             #define VERSION_COMPILER    L"MSVC 2013 Update 2"

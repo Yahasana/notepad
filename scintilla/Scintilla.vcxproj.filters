@@ -33,7 +33,13 @@
     <ClCompile Include="lexers\LexBash.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
+    <ClCompile Include="lexers\LexBatch.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
     <ClCompile Include="lexers\LexCmake.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="lexers\LexCoffeeScript.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexConf.cxx">
@@ -43,6 +49,12 @@
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexCSS.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="lexers\LexDiff.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="lexers\LexErrorList.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexHTML.cxx">
@@ -57,13 +69,16 @@
     <ClCompile Include="lexers\LexLua.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
+    <ClCompile Include="lexers\LexMake.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
     <ClCompile Include="lexers\LexMarkdown.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexNsis.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
-    <ClCompile Include="lexers\LexOthers.cxx">
+    <ClCompile Include="lexers\LexNull.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexPascal.cxx">
@@ -73,6 +88,9 @@
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexPowerShell.cxx">
+      <Filter>lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="lexers\LexProps.cxx">
       <Filter>lexers</Filter>
     </ClCompile>
     <ClCompile Include="lexers\LexPython.cxx">
@@ -210,6 +228,9 @@
     <ClCompile Include="src\XPM.cxx">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="win32\HanjaDic.cxx">
+      <Filter>win32</Filter>
+    </ClCompile>
     <ClCompile Include="win32\PlatWin.cxx">
       <Filter>win32</Filter>
     </ClCompile>
@@ -338,6 +359,9 @@
     <ClInclude Include="src\PerLine.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Position.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\PositionCache.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -370,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="src\XPM.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\HanjaDic.h">
+      <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="win32\PlatWin.h">
       <Filter>win32</Filter>

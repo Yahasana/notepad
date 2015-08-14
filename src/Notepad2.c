@@ -2174,7 +2174,7 @@ void MsgInitMenu(HWND hwnd,WPARAM wParam,LPARAM lParam)
       i == SCLEX_SQL || i == SCLEX_PERL || i == SCLEX_PYTHON || i == SCLEX_PROPERTIES ||i == SCLEX_CONF ||
       i == SCLEX_POWERSHELL || i == SCLEX_BATCH || i == SCLEX_DIFF || i == SCLEX_BASH || i == SCLEX_TCL ||
       i == SCLEX_AU3 || i == SCLEX_LATEX || i == SCLEX_AHK || i == SCLEX_RUBY || i == SCLEX_CMAKE || i == SCLEX_MARKDOWN ||
-      i == SCLEX_YAML || i == SCLEX_VHDL));
+      i == SCLEX_YAML));
 
   EnableCmd(hmenu,IDM_EDIT_INSERT_ENCODING,*mEncoding[iEncoding].pszParseNames);
 
@@ -3409,6 +3409,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         case SCLEX_CMAKE:
         case SCLEX_AVS:
         case SCLEX_YAML:
+        case SCLEX_COFFEESCRIPT:
           BeginWaitCursor();
           EditToggleLineComments(hwndEdit,L"#",TRUE);
           EndWaitCursor();
@@ -3475,6 +3476,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         case SCLEX_CPP:
         case SCLEX_NSIS:
         case SCLEX_AVS:
+        case SCLEX_VHDL:
           EditEncloseSelection(hwndEdit,L"/*",L"*/");
           break;
         case SCLEX_PASCAL:
@@ -3483,6 +3485,9 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
           break;
         case SCLEX_LUA:
           EditEncloseSelection(hwndEdit,L"--[[",L"]]");
+          break;
+        case SCLEX_COFFEESCRIPT:
+          EditEncloseSelection(hwndEdit,L"###",L"###");
       }
       break;
 
@@ -6243,7 +6248,7 @@ void ParseCommandLine()
             LocalFree(lpSchemeArg);
             lpSchemeArg = NULL;
           }
-          iInitialLexer = 33;
+          iInitialLexer = 34;
           flagLexerSpecified = 1;
           break;
 
@@ -6252,7 +6257,7 @@ void ParseCommandLine()
             LocalFree(lpSchemeArg);
             lpSchemeArg = NULL;
           }
-          iInitialLexer = 34;
+          iInitialLexer = 35;
           flagLexerSpecified = 1;
           break;
 

@@ -1210,7 +1210,7 @@ KEYWORDLIST KeyWords_INNO = {
 "languagecodepage languageid languagename licensefile lzmaalgorithm lzmablocksize lzmadictionarysize lzmamatchfinder "
 "lzmanumblockthreads lzmanumfastbytes lzmauseseparateprocess mergeduplicatefiles minversion onlybelowversion "
 "outputbasefilename outputdir outputmanifestfile password privilegesrequired reservebytes restartapplications "
-"restartifneededbyrun righttoleft setupiconfile setuplogging showcomponentsizes showlanguagedialog showtaskstreelines "
+"restartifneededbyrun righttoleft setupiconfile setuplogging setupmutex showcomponentsizes showlanguagedialog showtaskstreelines "
 "showundisplayablelanguages signeduninstaller signeduninstallerdir signtool signtoolretrycount slicesperdisk solidcompression "
 "sourcedir strongassemblyname timestamprounding timestampsinutc titlefontname titlefontsize touchdate touchtime uninstallable "
 "uninstalldisplayicon uninstalldisplayname uninstallfilesdir uninstalldisplaysize uninstalllogmode uninstallrestartcomputer "
@@ -2415,7 +2415,7 @@ KEYWORDLIST KeyWords_VHDL = {
 
 EDITLEXER lexVHDL = { SCLEX_VHDL, 63370, L"VHDL", L"vhdl; vhd", L"", &KeyWords_VHDL, {
                        { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
-                       { MULTI_STYLE(SCE_VHDL_COMMENTLINEBANG, SCE_VHDL_COMMENT, 0, 0), 63127, L"Comment", L"fore:#008800", L"" },
+                       { MULTI_STYLE(SCE_VHDL_COMMENTLINEBANG, SCE_VHDL_COMMENT, SCE_VHDL_BLOCK_COMMENT, 0), 63127, L"Comment", L"fore:#008800", L"" },
                        { SCE_VHDL_NUMBER, 63130, L"Number", L"fore:#FF0000", L"" },
                        { MULTI_STYLE(SCE_VHDL_STRING, SCE_VHDL_STRINGEOL, 0, 0), 63131, L"String", L"fore:#008000", L"" },
                        { SCE_VHDL_OPERATOR, 63132, L"Operator", L"fore:#B000B0", L"" },
@@ -2427,6 +2427,29 @@ EDITLEXER lexVHDL = { SCLEX_VHDL, 63370, L"VHDL", L"vhdl; vhd", L"", &KeyWords_V
                        { SCE_VHDL_STDPACKAGE, 63374, L"Standard package", L"", L"" },
                        { SCE_VHDL_STDTYPE, 63375, L"Standard type", L"fore:#FF8000", L"" },
                        { -1, 00000, L"", L"", L"" } } };
+
+
+KEYWORDLIST KeyWords_COFFEESCRIPT = {
+"", "", "", "", "", "", "", "", "" };
+
+
+EDITLEXER lexCOFFEESCRIPT = { SCLEX_COFFEESCRIPT, 63362, L"Coffeescript", L"coffee; Cakefile", L"", &KeyWords_COFFEESCRIPT, {
+                       { STYLE_DEFAULT, 63126, L"Default", L"", L"" },
+                       //{ SCE_COFFEESCRIPT_DEFAULT, L"Default", L"", L"" },
+                       { MULTI_STYLE(SCE_COFFEESCRIPT_COMMENT,SCE_COFFEESCRIPT_COMMENTLINE,SCE_COFFEESCRIPT_COMMENTDOC,SCE_COFFEESCRIPT_COMMENTBLOCK), 63127, L"Comment", L"fore:#646464", L"" },
+                       { MULTI_STYLE(SCE_COFFEESCRIPT_STRING,SCE_COFFEESCRIPT_STRINGEOL,SCE_COFFEESCRIPT_STRINGRAW,0), 63131, L"String", L"fore:#008000", L"" },
+                       { SCE_COFFEESCRIPT_PREPROCESSOR, 63133, L"Preprocessor", L"fore:#FF8000", L"" },
+                       { SCE_COFFEESCRIPT_IDENTIFIER, 63129, L"Identifier", L"bold; fore:#0A246A", L"" },
+                       { SCE_COFFEESCRIPT_OPERATOR, 63132, L"Operator", L"fore:#B000B0", L"" },
+                       { SCE_COFFEESCRIPT_NUMBER, 63130, L"Number", L"fore:#FF0000", L"" },
+                       //{ SCE_COFFEESCRIPT_CHARACTER, 63376, L"Character", L"", L"" },
+                       { MULTI_STYLE(SCE_COFFEESCRIPT_REGEX,SCE_COFFEESCRIPT_VERBOSE_REGEX,SCE_COFFEESCRIPT_VERBOSE_REGEX_COMMENT,0), 63315, L"Regex", L"fore:#006633; back:#FFF1A8", L"" },
+                       { SCE_COFFEESCRIPT_GLOBALCLASS, 63378, L"Global Class", L"", L"" },
+                       //{ MULTI_STYLE(SCE_COFFEESCRIPT_COMMENTLINEDOC,SCE_COFFEESCRIPT_COMMENTDOCKEYWORD,SCE_COFFEESCRIPT_COMMENTDOCKEYWORDERROR,0), 63379, L"Comment line", L"fore:#646464", L"" },
+                       { MULTI_STYLE(SCE_COFFEESCRIPT_WORD,SCE_COFFEESCRIPT_WORD2,0,0), 63380, L"Word", L"", L"" },
+                       { MULTI_STYLE(SCE_COFFEESCRIPT_VERBATIM,SCE_COFFEESCRIPT_TRIPLEVERBATIM,0,0), 63381, L"Verbatim", L"", L"" },
+                       { -1, 00000, L"", L"", L"" } } };
+
 
 // This array holds all the lexers...
 // Don't forget to change the number of the lexer for HTML and XML
@@ -2441,6 +2464,7 @@ PEDITLEXER pLexArray[NUMLEXERS] =
   &lexAHK,
   &lexAU3,
   &lexBAT,
+  &lexCOFFEESCRIPT,
   &lexINI,
   &lexCPP,
   &lexCS,
@@ -4031,7 +4055,7 @@ void Style_SetStyles(HWND hwnd,int iStyle,LPCWSTR lpszStyle)
   // Font
   if (Style_StrGetFont(lpszStyle,tch,COUNTOF(tch))) {
     char mch[256];
-    WideCharToMultiByte(CP_ACP,0,tch,-1,mch,COUNTOF(mch),NULL,NULL);
+    WideCharToMultiByte(CP_UTF8,0,tch,-1,mch,COUNTOF(mch),NULL,NULL);
     SendMessage(hwnd,SCI_STYLESETFONT,iStyle,(LPARAM)mch);
   }
 
