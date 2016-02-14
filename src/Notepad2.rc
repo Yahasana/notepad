@@ -640,7 +640,7 @@ BEGIN
     LTEXT           "Visit Notepad2-mod's website:",IDC_STATIC,45,60,200,8
     LTEXT           "",IDC_MOD_PAGE2,45,69,200,8,NOT WS_VISIBLE | WS_DISABLED
     CONTROL         "",IDC_MOD_PAGE,"SysLink",WS_TABSTOP,45,69,200,10
-    LTEXT           "Contact Florian Balmer:",IDC_STATIC,45,85,200,8
+    LTEXT           "Contact Sam Sanchez:",IDC_STATIC,45,85,200,8
     LTEXT           "",IDC_EMAIL2,45,94,200,8,NOT WS_VISIBLE | WS_DISABLED
     CONTROL         "",IDC_EMAIL,"SysLink",WS_TABSTOP,45,94,200,10
 END
