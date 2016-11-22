@@ -85,8 +85,6 @@
         #if (_MSC_FULL_VER == 180040629)
             #define VERSION_COMPILER    L"MSVC 2013 Update 5"
         #elif (_MSC_FULL_VER == 180031101)
-    #elif _MSC_VER == 1800
-        #if (_MSC_FULL_VER == 180031101)
             #define VERSION_COMPILER    L"MSVC 2013 Update 4"
         #elif (_MSC_FULL_VER == 180030723)
             #define VERSION_COMPILER    L"MSVC 2013 Update 3"
