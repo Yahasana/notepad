@@ -29,9 +29,9 @@
 #define STRINGIFY(x)    DO_STRINGIFY(x)
 
 #define VERSION_MAJOR   2016
-#define VERSION_MINOR   2
-#define VERSION_BUILD   14
-#define VERSION_REV		969
+#define VERSION_MINOR   11
+#define VERSION_BUILD   22
+#define VERSION_REV	969
 
 #define MY_APPNAME                   L"notepad"
 #define VERSION_FILEVERSION_NUM      VERSION_MAJOR,VERSION_MINOR,VERSION_BUILD,VERSION_REV
@@ -42,7 +42,7 @@
 #define VERSION_AUTHORNAME           L"Sam Sanchez"
 #define VERSION_WEBPAGEDISPLAY       L"flo's freeware - http://www.flos-freeware.ch"
 #define VERSION_EMAILDISPLAY         L"samsanchez@qq.com"
-#define VERSION_COMPANYNAME          L"Notepad ORG."
+#define VERSION_COMPANYNAME          L"Notepad Org"
 #define VERSION_MODPAGEDISPLAY       L"https://xhmikosr.github.io/notepad2-mod/"
 
 #if defined(_WIN64)
@@ -51,8 +51,8 @@
                                      L" r" STRINGIFY(VERSION_REV)
 #else
    #define VERSION_FILEVERSION_LONG  L"Notepad " STRINGIFY(VERSION_MAJOR) L"."         \
-                                     STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD) \
-                                     L" r" STRINGIFY(VERSION_REV)
+                                     STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD) 
+//\                                  L" r" STRINGIFY(VERSION_REV)
 #endif
 
 // Compiler specific

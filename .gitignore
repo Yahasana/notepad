@@ -6,6 +6,7 @@
 *.user
 /bin
 /build.user.bat
+/build/*.db
 /build/.vs
 /build/cov-int
 /build/Notepad2-mod.lzma
@@ -15,5 +16,5 @@
 /build/temp_zip*
 /distrib/Notepad2-mod.*.exe
 /res/Notepad2.exe.manifest
-/signinfo_notepad2-mod.txt
+/signinfo.txt
 /src/VersionRev.h
