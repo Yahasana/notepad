@@ -5,6 +5,7 @@
 // C standard library
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -16,12 +17,17 @@
 #include <sys/time.h>
 
 // C++ wrappers of C standard library
+#include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 #include <cctype>
 #include <cstdio>
+#include <cstdarg>
+#include <ctime>
 #include <cmath>
+#include <climits>
 
 // C++ standard library
 #include <stdexcept>
@@ -31,10 +37,12 @@
 #include <deque>
 #include <map>
 #include <set>
+#include <forward_list>
 #include <algorithm>
 #include <functional>
 #include <memory>
 #include <regex>
+#include <iostream>
 #include <sstream>
 
 // GTK+ headers
@@ -43,6 +51,8 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkwayland.h>
+#include <gtk/gtk-a11y.h>
 
 // Windows headers
 #include <windows.h>
@@ -68,6 +78,7 @@
 // include
 #include "Platform.h"
 
+#include "Sci_Position.h"
 #include "ILexer.h"
 #include "Scintilla.h"
 #include "ScintillaWidget.h"
@@ -95,9 +106,11 @@
 #include "Catalogue.h"
 
 #include "Position.h"
+#include "UniqueString.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "RunStyles.h"
+#include "SparseVector.h"
 #include "ContractionState.h"
 #include "CellBuffer.h"
 #include "PerLine.h"
@@ -136,7 +149,9 @@
 #include "HanjaDic.h"
 
 // gtk
+#include "ScintillaGTK.h"
 #include "scintilla-marshal.h"
+#include "ScintillaGTKAccessible.h"
 #include "Converter.h"
 
 // cocoa
@@ -148,3 +163,7 @@
 #import "ScintillaView.h"
 #import "ScintillaCocoa.h"
 #import "PlatCocoa.h"
+
+// Catch testing framework
+#include "catch.hpp"
+

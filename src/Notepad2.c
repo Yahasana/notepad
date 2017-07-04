@@ -5263,7 +5263,7 @@ LRESULT MsgNotify(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
               if (iSize >= 3) {
 
-                struct TextRange tr = { { iStartPos, iCurPos }, tchBuf };
+                struct Sci_TextRange tr = { { iStartPos, iCurPos }, tchBuf };
                 SendMessage(hwndEdit,SCI_GETTEXTRANGE,0,(LPARAM)&tr);
 
                 if (tchBuf[iSize - 2] != '/') {
@@ -5608,7 +5608,7 @@ void LoadSettings()
 
   iDefaultEncoding = IniSectionGetInt(pIniSection,L"DefaultEncoding",0);
   iDefaultEncoding = Encoding_MapIniSetting(TRUE,iDefaultEncoding);
-  if (!Encoding_IsValid(iDefaultEncoding)) iDefaultEncoding = CPI_DEFAULT;
+  if (!Encoding_IsValid(iDefaultEncoding)) iDefaultEncoding = CPI_UTF8;
 
   bSkipUnicodeDetection = IniSectionGetInt(pIniSection,L"SkipUnicodeDetection",0);
   if (bSkipUnicodeDetection) bSkipUnicodeDetection = 1;
