@@ -336,8 +336,8 @@ BEGIN
         POPUP "Esc &Key Function"
         BEGIN
             MENUITEM "&None",                       IDM_VIEW_NOESCFUNC
-            MENUITEM "&Minimize Notepad2-mod",      IDM_VIEW_ESCMINIMIZE
-            MENUITEM "E&xit Notepad2-mod",          IDM_VIEW_ESCEXIT
+            MENUITEM "&Minimize notepad",      IDM_VIEW_ESCMINIMIZE
+            MENUITEM "E&xit notepad",          IDM_VIEW_ESCEXIT
         END
         MENUITEM "Sa&ve Before Running Tools",  IDM_VIEW_SAVEBEFORERUNNINGTOOLS
 
@@ -379,8 +379,8 @@ BEGIN
     END
     POPUP "+"
     BEGIN
-        MENUITEM "Open Notepad2-mod",           IDM_TRAY_RESTORE
-        MENUITEM "Exit Notepad2-mod",           IDM_TRAY_EXIT
+        MENUITEM "Open notepad",           IDM_TRAY_RESTORE
+        MENUITEM "Exit notepad",           IDM_TRAY_EXIT
     END
 END
 
@@ -637,7 +637,7 @@ BEGIN
     LTEXT           "",IDC_COPYRIGHT,45,35,200,8
     LTEXT           "",IDC_WEBPAGE2,45,44,200,8,NOT WS_VISIBLE | WS_DISABLED
     CONTROL         "",IDC_WEBPAGE,"SysLink",WS_TABSTOP,45,44,200,10
-    LTEXT           "Visit Notepad2-mod's website:",IDC_STATIC,45,60,200,8
+    LTEXT           "Visit notepad's website:",IDC_STATIC,45,60,200,8
     LTEXT           "",IDC_MOD_PAGE2,45,69,200,8,NOT WS_VISIBLE | WS_DISABLED
     CONTROL         "",IDC_MOD_PAGE,"SysLink",WS_TABSTOP,45,69,200,10
     LTEXT           "Contact Sam Sanchez:",IDC_STATIC,45,85,200,8
@@ -1484,7 +1484,7 @@ STRINGTABLE
 BEGIN
     IDS_APPTITLE            MY_APPNAME
     IDS_APPTITLE_ELEVATED   "%s (Administrator)"
-    IDS_APPTITLE_PASTEBOARD "Notepad2-mod : Paste Board"
+    IDS_APPTITLE_PASTEBOARD "notepad : Paste Board"
     IDS_UNTITLED            "Untitled"
     IDS_TITLEEXCERPT        """%s"""
     IDS_READONLY            "(Read Only)"
@@ -1500,7 +1500,7 @@ BEGIN
     IDS_SAVEFILE            "Saving ""%s""..."
     IDS_PRINTFILE           "Printing page %i..."
     IDS_SAVINGSETTINGS      "Saving settings..."
-    IDS_LINKDESCRIPTION     "Edit with Notepad2-mod"
+    IDS_LINKDESCRIPTION     "Edit with notepad"
     IDS_FILTER_ALL          "All files (*.*)|*.*|"
     IDS_FILTER_EXE          "Executable files (*.exe;*.com;*.bat;*.cmd;*.lnk;*.pif)|*.exe;*.com;*.bat;*.cmd;*.lnk;*.pif|All files (*.*)|*.*|"
 END
@@ -1565,7 +1565,7 @@ BEGIN
     IDS_ERR_BROWSE          "No file browser plugin was found.\nThe metapath file browser plugin can be downloaded from http://www.flos-freeware.ch."
     IDS_ERR_MRUDLG          "No access to the selected file!\nWould you like to remove it from the list?"
     IDS_ERR_CREATELINK      "Error creating the Desktop link."
-    IDS_ERR_PREVWINDISABLED "Existing Notepad2-mod window is busy or has an active dialog box.\nWould you like to open another Notepad2-mod window?"
+    IDS_ERR_PREVWINDISABLED "Existing notepad window is busy or has an active dialog box.\nWould you like to open another notepad window?"
     IDS_SELRECT             "This operation can't be perfomed within a rectangular selection."
     IDS_BUFFERTOOSMALL      "This operation can't be performed (lines too long)."
     IDS_FIND_WRAPFW         "Reached the end of the document, restarting search at the beginning."

@@ -8,6 +8,8 @@
 #ifndef UNICONVERSION_H
 #define UNICONVERSION_H
 
+#include <string> 
+
 #ifdef SCI_NAMESPACE
 namespace Scintilla {
 #endif

@@ -605,7 +605,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInst,LPSTR lpCmdLine,int n
         (LPWSTR)&lpMsgBuf,
         0,
         NULL);
-    MessageBox(NULL,(LPCWSTR)lpMsgBuf,L"Notepad2-mod",MB_OK|MB_ICONEXCLAMATION);
+    MessageBox(NULL,(LPCWSTR)lpMsgBuf,L"notepad",MB_OK|MB_ICONEXCLAMATION);
     LocalFree(lpMsgBuf);
     return(0);
   }
@@ -5521,7 +5521,8 @@ void LoadSettings()
   else
     PathAbsoluteFromApp(tchFavoritesDir,NULL,COUNTOF(tchFavoritesDir),TRUE);
 
-  iPathNameFormat = IniSectionGetInt(pIniSection,L"PathNameFormat",0);
+  // 0 - filename only, 1 - filename & dir, 2 - full path
+  iPathNameFormat = IniSectionGetInt(pIniSection,L"PathNameFormat",1);
   iPathNameFormat = max(min(iPathNameFormat,2),0);
 
   fWordWrap = IniSectionGetInt(pIniSection,L"WordWrap",0);
@@ -5543,19 +5544,19 @@ void LoadSettings()
   bMatchBraces = IniSectionGetInt(pIniSection,L"MatchBraces",1);
   if (bMatchBraces) bMatchBraces = 1;
 
-  bAutoCloseTags = IniSectionGetInt(pIniSection,L"AutoCloseTags",0);
+  bAutoCloseTags = IniSectionGetInt(pIniSection,L"AutoCloseTags",1);
   if (bAutoCloseTags) bAutoCloseTags = 1;
 
-  bHiliteCurrentLine = IniSectionGetInt(pIniSection,L"HighlightCurrentLine",0);
+  bHiliteCurrentLine = IniSectionGetInt(pIniSection,L"HighlightCurrentLine",1);
   if (bHiliteCurrentLine) bHiliteCurrentLine = 1;
 
   bAutoIndent = IniSectionGetInt(pIniSection,L"AutoIndent",1);
   if (bAutoIndent) bAutoIndent = 1;
 
-  bAutoCompleteWords = IniSectionGetInt(pIniSection,L"AutoCompleteWords",0);
+  bAutoCompleteWords = IniSectionGetInt(pIniSection,L"AutoCompleteWords",1);
   if (bAutoCompleteWords) bAutoCompleteWords = 1;
 
-  bShowIndentGuides = IniSectionGetInt(pIniSection,L"ShowIndentGuides",0);
+  bShowIndentGuides = IniSectionGetInt(pIniSection,L"ShowIndentGuides",1);
   if (bShowIndentGuides) bShowIndentGuides = 1;
 
   bTabsAsSpaces = IniSectionGetInt(pIniSection,L"TabsAsSpaces",1);
@@ -5566,10 +5567,10 @@ void LoadSettings()
   if (bTabIndents) bTabIndents = 1;
   bTabIndentsG = bTabIndents;
 
-  bBackspaceUnindents = IniSectionGetInt(pIniSection,L"BackspaceUnindents",0);
+  bBackspaceUnindents = IniSectionGetInt(pIniSection,L"BackspaceUnindents",1);
   if (bBackspaceUnindents) bBackspaceUnindents = 1;
 
-  iTabWidth = IniSectionGetInt(pIniSection,L"TabWidth",2);
+  iTabWidth = IniSectionGetInt(pIniSection,L"TabWidth",4);
   iTabWidth = max(min(iTabWidth,256),1);
   iTabWidthG = iTabWidth;
 
@@ -5577,10 +5578,10 @@ void LoadSettings()
   iIndentWidth = max(min(iIndentWidth,256),0);
   iIndentWidthG = iIndentWidth;
 
-  bMarkLongLines = IniSectionGetInt(pIniSection,L"MarkLongLines",0);
+  bMarkLongLines = IniSectionGetInt(pIniSection,L"MarkLongLines",1);
   if (bMarkLongLines) bMarkLongLines = 1;
 
-  iLongLinesLimit = IniSectionGetInt(pIniSection,L"LongLinesLimit",72);
+  iLongLinesLimit = IniSectionGetInt(pIniSection,L"LongLinesLimit",80);
   iLongLinesLimit = max(min(iLongLinesLimit,4096),0);
   iLongLinesLimitG = iLongLinesLimit;
 
@@ -5683,7 +5684,7 @@ void LoadSettings()
   IniSectionGetString(pIniSection,L"ToolbarButtons",L"",
     tchToolbarButtons,COUNTOF(tchToolbarButtons));
 
-  bShowToolbar = IniSectionGetInt(pIniSection,L"ShowToolbar",1);
+  bShowToolbar = IniSectionGetInt(pIniSection,L"ShowToolbar",0);
   if (bShowToolbar) bShowToolbar = 1;
 
   bShowStatusbar = IniSectionGetInt(pIniSection,L"ShowStatusbar",1);
@@ -6440,7 +6441,7 @@ int CheckIniFile(LPWSTR lpszFile,LPCWSTR lpszModule)
 int CheckIniFileRedirect(LPWSTR lpszFile,LPCWSTR lpszModule)
 {
   WCHAR tch[MAX_PATH];
-  if (GetPrivateProfileString(L"Notepad2",L"Notepad2.ini",L"",tch,COUNTOF(tch),lpszFile)) {
+  if (GetPrivateProfileString(L"notepad",L"notepad.ini",L"",tch,COUNTOF(tch),lpszFile)) {
     if (CheckIniFile(tch,lpszModule)) {
       lstrcpy(lpszFile,tch);
       return(1);
@@ -6491,7 +6492,7 @@ int FindIniFile() {
   bFound = CheckIniFile(tchTest,tchModule);
 
   if (!bFound) {
-    lstrcpy(tchTest,L"Notepad2.ini");
+    lstrcpy(tchTest,L"notepad.ini");
     bFound = CheckIniFile(tchTest,tchModule);
   }
 
@@ -6525,7 +6526,7 @@ int TestIniFile() {
     PathAppend(szIniFile,PathFindFileName(wchModule));
     PathRenameExtension(szIniFile,L".ini");
     if (!PathFileExists(szIniFile)) {
-      lstrcpy(PathFindFileName(szIniFile),L"Notepad2.ini");
+      lstrcpy(PathFindFileName(szIniFile),L"notepad.ini");
       if (!PathFileExists(szIniFile)) {
         lstrcpy(PathFindFileName(szIniFile),PathFindFileName(wchModule));
         PathRenameExtension(szIniFile,L".ini");
@@ -6569,7 +6570,7 @@ int CreateIniFileEx(LPCWSTR lpszIniFile) {
     if (hFile != INVALID_HANDLE_VALUE) {
       if (GetFileSize(hFile,NULL) == 0) {
         DWORD dw;
-        WriteFile(hFile,(LPCVOID)L"\xFEFF[Notepad2]\r\n",26,&dw,NULL);
+        WriteFile(hFile,(LPCVOID)L"\xFEFF[notepad]\r\n",26,&dw,NULL);
       }
       CloseHandle(hFile);
       return(1);

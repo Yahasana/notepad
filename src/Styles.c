@@ -47,17 +47,17 @@ KEYWORDLIST KeyWords_NULL = {
 
 
 EDITLEXER lexDefault = { SCLEX_NULL, 63000, L"Default Text", L"txt; text; wtx; log; asc; doc", L"", &KeyWords_NULL, {
-                /*  0 */ { STYLE_DEFAULT, 63100, L"Default Style", L"font:Default; size:10", L"" },
-                /*  1 */ { STYLE_LINENUMBER, 63101, L"Margins and Line Numbers", L"size:-2; fore:#FF0000", L"" },
+                /*  0 */ { STYLE_DEFAULT, 63100, L"Default Style", L"font:Consolas; size:12; back:#F8F8F8", L"" },
+                /*  1 */ { STYLE_LINENUMBER, 63101, L"Margins and Line Numbers", L"size:-3; fore:#6F6B63; back:#F0F0F0", L"" },
                 /*  2 */ { STYLE_BRACELIGHT, 63102, L"Matching Braces", L"size:+1; bold; fore:#FF0000", L"" },
                 /*  3 */ { STYLE_BRACEBAD, 63103, L"Matching Braces Error", L"size:+1; bold; fore:#000080", L"" },
                 /*  4 */ { STYLE_CONTROLCHAR, 63104, L"Control Characters (Font)", L"size:-1", L"" },
                 /*  5 */ { STYLE_INDENTGUIDE, 63105, L"Indentation Guide (Color)", L"fore:#A0A0A0", L"" },
                 /*  6 */ { SCI_SETSELFORE+SCI_SETSELBACK, 63106, L"Selected Text (Colors)", L"back:#0A246A; eolfilled; alpha:95", L"" },
                 /*  7 */ { SCI_SETWHITESPACEFORE+SCI_SETWHITESPACEBACK+SCI_SETWHITESPACESIZE, 63107, L"Whitespace (Colors, Size 0-5)", L"fore:#FF4000", L"" },
-                /*  8 */ { SCI_SETCARETLINEBACK, 63108, L"Current Line Background (Color)", L"back:#FFFF00; alpha:50", L"" },
+                /*  8 */ { SCI_SETCARETLINEBACK, 63108, L"Current Line Background (Color)", L"back:#F5DEB3; alpha:50", L"" },
                 /*  9 */ { SCI_SETCARETFORE+SCI_SETCARETWIDTH, 63109, L"Caret (Color, Size 1-3)", L"", L"" },
-                /* 10 */ { SCI_SETEDGECOLOUR, 63110, L"Long Line Marker (Colors)", L"fore:#FFC000", L"" },
+                /* 10 */ { SCI_SETEDGECOLOUR, 63110, L"Long Line Marker (Colors)", L"fore:#F4DC84", L"" },
                 /* 11 */ { SCI_SETEXTRAASCENT+SCI_SETEXTRADESCENT, 63111, L"Extra Line Spacing (Size)", L"size:2", L"" },
 
                 /* 12 */ { STYLE_DEFAULT, 63112, L"2nd Default Style", L"font:Courier New; size:10", L"" },
@@ -3096,13 +3096,17 @@ void Style_SetLexer(HWND hwnd,PEDITLEXER pLexNew)
     SciCall_SetFoldMarginColour(TRUE, clrBack);
     SciCall_SetFoldMarginHiColour(TRUE, clrBack);
 
-    // Set marker color to the average of clrFore and clrBack
-    clrFore = (((clrFore & 0xFF0000) + (clrBack & 0xFF0000)) >> 1 & 0xFF0000) |
-              (((clrFore & 0x00FF00) + (clrBack & 0x00FF00)) >> 1 & 0x00FF00) |
-              (((clrFore & 0x0000FF) + (clrBack & 0x0000FF)) >> 1 & 0x0000FF);
+    if (Style_StrGetColor(TRUE, lexDefault.Styles[5 + iIdx].szValue, &rgb)) { // Indentation Guide
+      clrFore = rgb;
+    } else {
+      // Set marker color to the average of clrFore and clrBack
+      clrFore = (((clrFore & 0xFF0000) + (clrBack & 0xFF0000)) >> 1 & 0xFF0000) |
+                (((clrFore & 0x00FF00) + (clrBack & 0x00FF00)) >> 1 & 0x00FF00) |
+                (((clrFore & 0x0000FF) + (clrBack & 0x0000FF)) >> 1 & 0x0000FF);
 
-    // Rounding hack for pure white against pure black
-    if (clrFore == 0x7F7F7F) clrFore = 0x808080;
+      // Rounding hack for pure white against pure black
+      if (clrFore == 0x7F7F7F) clrFore = 0x808080;
+    }
 
     for (i = 0; i < COUNTOF(iMarkerIDs); ++i)
     {

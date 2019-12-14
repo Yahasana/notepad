@@ -28,25 +28,25 @@
 #define DO_STRINGIFY(x) _T(#x)
 #define STRINGIFY(x)    DO_STRINGIFY(x)
 
-#define VERSION_MAJOR   2016
-#define VERSION_MINOR   11
-#define VERSION_BUILD   22
-#define VERSION_REV		969
+#define VERSION_MAJOR   2019
+#define VERSION_MINOR   12
+#define VERSION_BUILD   12
+#define VERSION_REV		999
 
 #define MY_APPNAME                   L"notepad"
 #define VERSION_FILEVERSION_NUM      VERSION_MAJOR,VERSION_MINOR,VERSION_BUILD,VERSION_REV
 #define VERSION_FILEVERSION          STRINGIFY(VERSION_MAJOR) "." STRINGIFY(VERSION_MINOR) "." \
                                      STRINGIFY(VERSION_BUILD) "." STRINGIFY(VERSION_REV)
-#define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright ? 2004-2017"
-#define VERSION_LEGALCOPYRIGHT_LONG  L"Florian Balmer 2004-2017"
+#define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright ? 2004-2019"
+#define VERSION_LEGALCOPYRIGHT_LONG  L"Florian Balmer 2004-2016"
 #define VERSION_AUTHORNAME           L"Sam Sanchez"
 #define VERSION_WEBPAGEDISPLAY       L"flo's freeware - http://www.flos-freeware.ch"
 #define VERSION_EMAILDISPLAY         L"samsanchez@qq.com"
 #define VERSION_COMPANYNAME          L"Notepad Org"
-#define VERSION_MODPAGEDISPLAY       L"https://xhmikosr.github.io/notepad2-mod/"
+#define VERSION_MODPAGEDISPLAY       L"https://yahasana.github.io/notepad/"
 
 #if defined(_WIN64)
-   #define VERSION_FILEVERSION_LONG  L"Notepad (x64) " STRINGIFY(VERSION_MAJOR) L"." \
+   #define VERSION_FILEVERSION_LONG  L"notepad (x64) " STRINGIFY(VERSION_MAJOR) L"." \
                                      STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD)
 //\                                     L" r" STRINGIFY(VERSION_REV)
 #else
@@ -57,7 +57,9 @@
 
 // Compiler specific
 #if defined(_MSC_VER)
-    #if _MSC_VER == 1900
+    #if _MSC_VER == 1924
+        #define VERSION_COMPILER    L"MSVC 2019"
+    #elif _MSC_VER == 1900
         #if (_MSC_FULL_VER == 190024215)
             #define VERSION_COMPILER    L"MSVC 2015 Update 3"
         #elif (_MSC_FULL_VER < 190023026)
