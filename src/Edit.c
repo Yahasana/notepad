@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 *
 *
 * Notepad2
@@ -1761,8 +1761,6 @@ void EditTitleCase(HWND hwnd)
       }
 
       else {
-
-
 #ifdef BOOKMARK_EDITION
       //Slightly enhanced function to make Title Case: Added some '-characters and bPrevWasSpace makes it better (for example "'Don't'" will now work)
       bPrevWasSpace = TRUE;

@@ -1639,7 +1639,7 @@ int MRU_Compare(LPMRULIST pmru,LPCWSTR psz1,LPCWSTR psz2) {
 BOOL MRU_Add(LPMRULIST pmru,LPCWSTR pszNew) {
 
   int i;
-  for (i = 0; i < pmru->iSize; i++) {
+  for (i = 0; pmru->pszItems[i] != NULL && i < pmru->iSize; i++) {
     if (MRU_Compare(pmru,pmru->pszItems[i],pszNew) == 0) {
       LocalFree(pmru->pszItems[i]);
       break;
@@ -1655,7 +1655,7 @@ BOOL MRU_Add(LPMRULIST pmru,LPCWSTR pszNew) {
 BOOL MRU_AddFile(LPMRULIST pmru,LPCWSTR pszFile,BOOL bRelativePath,BOOL bUnexpandMyDocs) {
 
   int i;
-  for (i = 0; i < pmru->iSize; i++) {
+  for (i = 0; pmru->pszItems[i] != NULL && i < pmru->iSize; i++) {
     if (lstrcmpi(pmru->pszItems[i],pszFile) == 0) {
       LocalFree(pmru->pszItems[i]);
       break;
