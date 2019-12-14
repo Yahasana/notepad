@@ -8,9 +8,7 @@
 #ifndef EDITMODEL_H
 #define EDITMODEL_H
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 /**
 */
@@ -39,10 +37,13 @@ public:
 	bool primarySelection;
 
 	enum IMEInteraction { imeWindowed, imeInline } imeInteraction;
+	enum class CharacterSource { directInput, tentativeInput, imeResult };
+	enum class Bidirectional { bidiDisabled, bidiL2R, bidiR2L  } bidirectional;
 
 	int foldFlags;
 	int foldDisplayTextStyle;
-	ContractionState cs;
+	UniqueString defaultFoldDisplayText;
+	std::unique_ptr<IContractionState> pcs;
 	// Hotspot support
 	Range hotspot;
 	Sci::Position hoverIndicatorPos;
@@ -54,17 +55,22 @@ public:
 
 	EditModel();
 	// Deleted so EditModel objects can not be copied.
-	explicit EditModel(const EditModel &) = delete;
+	EditModel(const EditModel &) = delete;
+	EditModel(EditModel &&) = delete;
 	EditModel &operator=(const EditModel &) = delete;
+	EditModel &operator=(EditModel &&) = delete;
 	virtual ~EditModel();
 	virtual Sci::Line TopLineOfMain() const = 0;
 	virtual Point GetVisibleOriginInMain() const = 0;
 	virtual Sci::Line LinesOnScreen() const = 0;
-	virtual Range GetHotSpotRange() const = 0;
+	virtual Range GetHotSpotRange() const noexcept = 0;
+	bool BidirectionalEnabled() const;
+	bool BidirectionalR2L() const;
+	void SetDefaultFoldDisplayText(const char *text);
+	const char *GetDefaultFoldDisplayText() const noexcept;
+	const char *GetFoldDisplayText(Sci::Line lineDoc) const;
 };
 
-#ifdef SCI_NAMESPACE
 }
-#endif
 
 #endif

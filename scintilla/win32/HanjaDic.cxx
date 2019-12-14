@@ -7,15 +7,14 @@
 // The License.txt file describes the conditions under which this software may be distributed.
 
 #include <string>
+#include <string_view>
 
 #include <windows.h>
 
 #include "UniConversion.h"
 #include "HanjaDic.h"
 
-#ifdef SCI_NAMESPACE
 namespace Scintilla {
-#endif
 
 namespace HanjaDict {
 
@@ -66,10 +65,10 @@ private:
 public:
 	IHanjaDic *HJinterface;
 
-	HanjaDic() : HJinterface(NULL) {
+	HanjaDic() : HJinterface(nullptr) {
 		hr = CLSIDFromProgID(OLESTR("mshjdic.hanjadic"), &CLSID_HanjaDic);
 		if (SUCCEEDED(hr)) {
-			hr = CoCreateInstance(CLSID_HanjaDic, NULL,
+			hr = CoCreateInstance(CLSID_HanjaDic, nullptr,
 					CLSCTX_INPROC_SERVER, IID_IHanjaDic,
 					(LPVOID *)& HJinterface);
 			if (SUCCEEDED(hr)) {
@@ -126,6 +125,4 @@ int GetHangulOfHanja(wchar_t *inout) {
 }
 
 }
-#ifdef SCI_NAMESPACE
 }
-#endif

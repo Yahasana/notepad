@@ -1,6 +1,6 @@
 // Scintilla source code edit control
 /** @file ExternalLexer.cxx
- ** Support external lexers in DLLs.
+ ** Support external lexers in DLLs or shared libraries.
  **/
 // Copyright 2001 Simon Steele <ss@pnotepad.org>, portions copyright Neil Hodgson.
 // The License.txt file describes the conditions under which this software may be distributed.
@@ -11,6 +11,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <memory>
 
@@ -24,9 +25,7 @@
 #include "Catalogue.h"
 #include "ExternalLexer.h"
 
-#ifdef SCI_NAMESPACE
 using namespace Scintilla;
-#endif
 
 std::unique_ptr<LexerManager> LexerManager::theInstance;
 
@@ -66,7 +65,9 @@ LexerLibrary::LexerLibrary(const char *moduleName_) {
 				// Assign a buffer for the lexer name.
 				char lexname[100] = "";
 				GetLexerName(i, lexname, sizeof(lexname));
-				ExternalLexerModule *lex = new ExternalLexerModule(SCLEX_AUTOMATIC, NULL, lexname, NULL);
+				ExternalLexerModule *lex = new ExternalLexerModule(SCLEX_AUTOMATIC, nullptr, lexname, nullptr);
+				// This is storing a second reference to lex in the Catalogue as well as in modules.
+				// TODO: Should use std::shared_ptr or similar to ensure allocation safety.
 				Catalogue::AddLexerModule(lex);
 
 				// Remember ExternalLexerModule so we don't leak it
@@ -114,8 +115,7 @@ void LexerManager::Load(const char *path) {
 		if (ll->moduleName == path)
 			return;
 	}
-	LexerLibrary *lib = new LexerLibrary(path);
-	libraries.push_back(std::unique_ptr<LexerLibrary>(lib));
+	libraries.push_back(std::make_unique<LexerLibrary>(path));
 }
 
 void LexerManager::Clear() {

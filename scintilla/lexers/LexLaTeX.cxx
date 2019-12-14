@@ -26,11 +26,10 @@
 #include "StyleContext.h"
 #include "CharacterSet.h"
 #include "LexerModule.h"
+#include "DefaultLexer.h"
 #include "LexerBase.h"
 
-#ifdef SCI_NAMESPACE
 using namespace Scintilla;
-#endif
 
 using namespace std;
 
@@ -41,8 +40,15 @@ struct latexFoldSave {
 	latexFoldSave(const latexFoldSave &save) : structLev(save.structLev) {
 		for (int i = 0; i < 8; ++i) openBegins[i] = save.openBegins[i];
 	}
+	latexFoldSave &operator=(const latexFoldSave &save) {
+		if (this != &save) {
+			structLev = save.structLev;
+			for (int i = 0; i < 8; ++i) openBegins[i] = save.openBegins[i];
+		}
+		return *this;
+	}
 	int openBegins[8];
-	int structLev;
+	Sci_Position structLev;
 };
 
 class LexerLaTeX : public LexerBase {
@@ -78,7 +84,7 @@ private:
 			saves.resize(numLines + 128);
 	}
 public:
-	static ILexer *LexerFactoryLaTeX() {
+	static ILexer4 *LexerFactoryLaTeX() {
 		return new LexerLaTeX();
 	}
 	void SCI_METHOD Lex(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) override;

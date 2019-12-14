@@ -10,6 +10,7 @@
 #include <cstring>
 
 #include <stdexcept>
+#include <string_view>
 #include <vector>
 #include <forward_list>
 #include <algorithm>
@@ -24,9 +25,7 @@
 #include "CellBuffer.h"
 #include "PerLine.h"
 
-#ifdef SCI_NAMESPACE
 using namespace Scintilla;
-#endif
 
 MarkerHandleSet::MarkerHandleSet() {
 }
@@ -35,11 +34,11 @@ MarkerHandleSet::~MarkerHandleSet() {
 	mhList.clear();
 }
 
-bool MarkerHandleSet::Empty() const {
+bool MarkerHandleSet::Empty() const noexcept {
 	return mhList.empty();
 }
 
-int MarkerHandleSet::MarkValue() const {
+int MarkerHandleSet::MarkValue() const noexcept {
 	unsigned int m = 0;
 	for (const MarkerHandleNumber &mhn : mhList) {
 		m |= (1 << mhn.number);
@@ -47,7 +46,7 @@ int MarkerHandleSet::MarkValue() const {
 	return m;
 }
 
-bool MarkerHandleSet::Contains(int handle) const {
+bool MarkerHandleSet::Contains(int handle) const noexcept {
 	for (const MarkerHandleNumber &mhn : mhList) {
 		if (mhn.handle == handle) {
 			return true;
@@ -62,7 +61,7 @@ bool MarkerHandleSet::InsertHandle(int handle, int markerNum) {
 }
 
 void MarkerHandleSet::RemoveHandle(int handle) {
-	mhList.remove_if([=](const MarkerHandleNumber &mhn) { return mhn.handle == handle; });
+	mhList.remove_if([handle](const MarkerHandleNumber &mhn) { return mhn.handle == handle; });
 }
 
 bool MarkerHandleSet::RemoveNumber(int markerNum, bool all) {
@@ -82,7 +81,6 @@ void MarkerHandleSet::CombineWith(MarkerHandleSet *other) {
 }
 
 LineMarkers::~LineMarkers() {
-	markers.DeleteAll();
 }
 
 void LineMarkers::Init() {
@@ -121,13 +119,13 @@ Sci::Line LineMarkers::LineFromHandle(int markerHandle) {
 void LineMarkers::MergeMarkers(Sci::Line line) {
 	if (markers[line + 1]) {
 		if (!markers[line])
-			markers[line].reset(new MarkerHandleSet);
+			markers[line] = std::make_unique<MarkerHandleSet>();
 		markers[line]->CombineWith(markers[line + 1].get());
 		markers[line + 1].reset();
 	}
 }
 
-int LineMarkers::MarkValue(Sci::Line line) {
+int LineMarkers::MarkValue(Sci::Line line) noexcept {
 	if (markers.Length() && (line >= 0) && (line < markers.Length()) && markers[line])
 		return markers[line]->MarkValue();
 	else
@@ -137,7 +135,7 @@ int LineMarkers::MarkValue(Sci::Line line) {
 Sci::Line LineMarkers::MarkerNext(Sci::Line lineStart, int mask) const {
 	if (lineStart < 0)
 		lineStart = 0;
-	const Sci::Line length = markers.Length();
+	const Sci::Line length = static_cast<Sci::Line>(markers.Length());
 	for (Sci::Line iLine = lineStart; iLine < length; iLine++) {
 		const MarkerHandleSet *onLine = markers[iLine].get();
 		if (onLine && ((onLine->MarkValue() & mask) != 0))
@@ -157,7 +155,7 @@ int LineMarkers::AddMark(Sci::Line line, int markerNum, Sci::Line lines) {
 	}
 	if (!markers[line]) {
 		// Need new structure to hold marker handle
-		markers[line].reset(new MarkerHandleSet());
+		markers[line] = std::make_unique<MarkerHandleSet>();
 	}
 	markers[line]->InsertHandle(handleCurrent, markerNum);
 
@@ -181,7 +179,7 @@ bool LineMarkers::DeleteMark(Sci::Line line, int markerNum, bool all) {
 }
 
 void LineMarkers::DeleteMarkFromHandle(int markerHandle) {
-	Sci::Line line = LineFromHandle(markerHandle);
+	const Sci::Line line = LineFromHandle(markerHandle);
 	if (line >= 0) {
 		markers[line]->RemoveHandle(markerHandle);
 		if (markers[line]->Empty()) {
@@ -199,7 +197,7 @@ void LineLevels::Init() {
 
 void LineLevels::InsertLine(Sci::Line line) {
 	if (levels.Length()) {
-		int level = (line < levels.Length()) ? levels[line] : SC_FOLDLEVELBASE;
+		const int level = (line < levels.Length()) ? levels[line] : SC_FOLDLEVELBASE;
 		levels.InsertValue(line, 1, level);
 	}
 }
@@ -257,7 +255,7 @@ void LineState::Init() {
 void LineState::InsertLine(Sci::Line line) {
 	if (lineStates.Length()) {
 		lineStates.EnsureLength(line);
-		int val = (line < lineStates.Length()) ? lineStates[line] : 0;
+		const int val = (line < lineStates.Length()) ? lineStates[line] : 0;
 		lineStates.Insert(line, val);
 	}
 }
@@ -283,10 +281,10 @@ int LineState::GetLineState(Sci::Line line) {
 }
 
 Sci::Line LineState::GetMaxLineState() const {
-	return lineStates.Length();
+	return static_cast<Sci::Line>(lineStates.Length());
 }
 
-static int NumberLines(const char *text) {
+static int NumberLines(const char *text) noexcept {
 	if (text) {
 		int newLines = 0;
 		while (*text) {
@@ -312,7 +310,6 @@ struct AnnotationHeader {
 };
 
 LineAnnotation::~LineAnnotation() {
-	ClearAll();
 }
 
 void LineAnnotation::Init() {
@@ -351,27 +348,26 @@ const char *LineAnnotation::Text(Sci::Line line) const {
 	if (annotations.Length() && (line >= 0) && (line < annotations.Length()) && annotations[line])
 		return annotations[line].get()+sizeof(AnnotationHeader);
 	else
-		return 0;
+		return nullptr;
 }
 
 const unsigned char *LineAnnotation::Styles(Sci::Line line) const {
 	if (annotations.Length() && (line >= 0) && (line < annotations.Length()) && annotations[line] && MultipleStyles(line))
 		return reinterpret_cast<unsigned char *>(annotations[line].get() + sizeof(AnnotationHeader) + Length(line));
 	else
-		return 0;
+		return nullptr;
 }
 
-static char *AllocateAnnotation(int length, int style) {
+static std::unique_ptr<char[]>AllocateAnnotation(int length, int style) {
 	const size_t len = sizeof(AnnotationHeader) + length + ((style == IndividualStyles) ? length : 0);
-	char *ret = new char[len]();
-	return ret;
+	return std::make_unique<char[]>(len);
 }
 
 void LineAnnotation::SetText(Sci::Line line, const char *text) {
 	if (text && (line >= 0)) {
 		annotations.EnsureLength(line+1);
 		const int style = Style(line);
-		annotations[line].reset(AllocateAnnotation(static_cast<int>(strlen(text)), style));
+		annotations[line] = AllocateAnnotation(static_cast<int>(strlen(text)), style);
 		char *pa = annotations[line].get();
 		assert(pa);
 		AnnotationHeader *pah = reinterpret_cast<AnnotationHeader *>(pa);
@@ -393,7 +389,7 @@ void LineAnnotation::ClearAll() {
 void LineAnnotation::SetStyle(Sci::Line line, int style) {
 	annotations.EnsureLength(line+1);
 	if (!annotations[line]) {
-		annotations[line].reset(AllocateAnnotation(0, style));
+		annotations[line] = AllocateAnnotation(0, style);
 	}
 	reinterpret_cast<AnnotationHeader *>(annotations[line].get())->style = static_cast<short>(style);
 }
@@ -402,16 +398,16 @@ void LineAnnotation::SetStyles(Sci::Line line, const unsigned char *styles) {
 	if (line >= 0) {
 		annotations.EnsureLength(line+1);
 		if (!annotations[line]) {
-			annotations[line].reset(AllocateAnnotation(0, IndividualStyles));
+			annotations[line] = AllocateAnnotation(0, IndividualStyles);
 		} else {
-			AnnotationHeader *pahSource = reinterpret_cast<AnnotationHeader *>(annotations[line].get());
+			const AnnotationHeader *pahSource = reinterpret_cast<AnnotationHeader *>(annotations[line].get());
 			if (pahSource->style != IndividualStyles) {
-				char *allocation = AllocateAnnotation(pahSource->length, IndividualStyles);
-				AnnotationHeader *pahAlloc = reinterpret_cast<AnnotationHeader *>(allocation);
+				std::unique_ptr<char[]>allocation = AllocateAnnotation(pahSource->length, IndividualStyles);
+				AnnotationHeader *pahAlloc = reinterpret_cast<AnnotationHeader *>(allocation.get());
 				pahAlloc->length = pahSource->length;
 				pahAlloc->lines = pahSource->lines;
-				memcpy(allocation + sizeof(AnnotationHeader), annotations[line].get() + sizeof(AnnotationHeader), pahSource->length);
-				annotations[line].reset(allocation);
+				memcpy(allocation.get() + sizeof(AnnotationHeader), annotations[line].get() + sizeof(AnnotationHeader), pahSource->length);
+				annotations[line] = std::move(allocation);
 			}
 		}
 		AnnotationHeader *pah = reinterpret_cast<AnnotationHeader *>(annotations[line].get());
@@ -435,7 +431,6 @@ int LineAnnotation::Lines(Sci::Line line) const {
 }
 
 LineTabstops::~LineTabstops() {
-	tabstops.DeleteAll();
 }
 
 void LineTabstops::Init() {
@@ -470,7 +465,7 @@ bool LineTabstops::ClearTabstops(Sci::Line line) {
 bool LineTabstops::AddTabstop(Sci::Line line, int x) {
 	tabstops.EnsureLength(line + 1);
 	if (!tabstops[line]) {
-		tabstops[line].reset(new TabstopList());
+		tabstops[line] = std::make_unique<TabstopList>();
 	}
 
 	TabstopList *tl = tabstops[line].get();

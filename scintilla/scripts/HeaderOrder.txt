@@ -14,7 +14,6 @@
 #include <assert.h>
 #include <ctype.h>
 #include <limits.h>
-#include <sys/time.h>
 
 // C++ wrappers of C standard library
 #include <cstddef>
@@ -32,20 +31,29 @@
 // C++ standard library
 #include <stdexcept>
 #include <new>
+#include <utility>
+#include <tuple>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <deque>
 #include <map>
 #include <set>
 #include <forward_list>
 #include <algorithm>
+#include <iterator>
 #include <functional>
 #include <memory>
+#include <numeric>
+#include <chrono>
 #include <regex>
 #include <iostream>
 #include <sstream>
 
-// GTK+ headers
+// POSIX
+#include <sys/time.h>
+
+// GTK headers
 #include <glib.h>
 #include <gmodule.h>
 #include <gdk/gdk.h>
@@ -79,6 +87,7 @@
 #include "Platform.h"
 
 #include "Sci_Position.h"
+#include "ILoader.h"
 #include "ILexer.h"
 #include "Scintilla.h"
 #include "ScintillaWidget.h"
@@ -98,6 +107,7 @@
 #include "OptionSet.h"
 #include "SparseState.h"
 #include "SubStyles.h"
+#include "DefaultLexer.h"
 #include "LexerBase.h"
 #include "LexerSimple.h"
 #include "LexerNoExceptions.h"
@@ -106,6 +116,7 @@
 #include "Catalogue.h"
 
 #include "Position.h"
+#include "IntegerRectangle.h"
 #include "UniqueString.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
@@ -128,7 +139,7 @@
 #include "RESearch.h"
 #include "CaseConvert.h"
 #include "UniConversion.h"
-#include "UnicodeFromUTF8.h"
+#include "DBCS.h"
 #include "Selection.h"
 #include "PositionCache.h"
 #include "FontQuality.h"
@@ -136,6 +147,7 @@
 #include "MarginView.h"
 #include "EditView.h"
 #include "Editor.h"
+#include "ElapsedPeriod.h"
 
 #include "AutoComplete.h"
 #include "ScintillaBase.h"
@@ -147,6 +159,7 @@
 // win32
 #include "PlatWin.h"
 #include "HanjaDic.h"
+#include "ScintillaWin.h"
 
 // gtk
 #include "ScintillaGTK.h"
