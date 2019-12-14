@@ -1338,12 +1338,14 @@ BOOL EditLoadFile(
             ((IsUTF8Signature(lpData) ||
               FileVars_IsUTF8(&fvCurFile) ||
               (iSrcEncoding == CPI_UTF8 || iSrcEncoding == CPI_UTF8SIGN) ||
+              // from menu "Reload As UTF-8"
+              (!bPreferOEM && bLoadASCIIasUTF8) ||
               (IsUTF8(lpData,cbData) &&
               (((UTF8_mbslen_bytes(UTF8StringStart(lpData)) - 1 !=
                 UTF8_mbslen(UTF8StringStart(lpData),IsUTF8Signature(lpData) ? cbData-3 : cbData)) ||
                 (!bPreferOEM && (
-                mEncoding[_iDefaultEncoding].uFlags & NCP_UTF8 ||
-                bLoadASCIIasUTF8 )) ))))) && !(FileVars_IsNonUTF8(&fvCurFile) &&
+                mEncoding[_iDefaultEncoding].uFlags & NCP_UTF8
+                )) ))))) && !(FileVars_IsNonUTF8(&fvCurFile) &&
                   (iSrcEncoding != CPI_UTF8 && iSrcEncoding != CPI_UTF8SIGN)))
     {
       SendMessage(hwnd,SCI_SETCODEPAGE,SC_CP_UTF8,0);
@@ -1766,7 +1768,7 @@ void EditTitleCase(HWND hwnd)
       bPrevWasSpace = TRUE;
       for (i = 0; i < cchTextW; i++)
       {
-          if (!IsCharAlphaNumericW(pszTextW[i]) && (!StrChr(L"'`´’",pszTextW[i]) ||  bPrevWasSpace ) )
+          if (!IsCharAlphaNumericW(pszTextW[i]) && (!StrChr(L"'`Î„â€™",pszTextW[i]) ||  bPrevWasSpace ) )
           {
               bNewWord = TRUE;
           }
@@ -4108,7 +4110,7 @@ void EditWrapToColumn(HWND hwnd,int nColumn/*,int nTabWidth*/)
   cchConvW = 0;
   iLineLength = 0;
 
-#define ISDELIMITER(wc) StrChr(L",;.:-+%&¦|/*?!\"\'~?=",wc)
+#define ISDELIMITER(wc) StrChr(L",;.:-+%&Â¦|/*?!\"\'~Î„#=",wc)
 #define ISWHITE(wc) StrChr(L" \t",wc)
 #define ISWORDEND(wc) (/*ISDELIMITER(wc) ||*/ StrChr(L" \t\r\n",wc))
 
@@ -5836,6 +5838,8 @@ void EditMarkAll(HWND hwnd, int iMarkOccurrences, BOOL bMarkOccurrencesMatchCase
     return;
 
 
+  // scintilla/src/Editor.h SelectionText.LengthWithTerminator()
+  iSelCount = (int)SendMessage(hwnd,SCI_GETSELTEXT,0,0) - 1;
   pszText = LocalAlloc(LPTR,iSelCount + 1);
   (int)SendMessage(hwnd,SCI_GETSELTEXT,0,(LPARAM)pszText);
 

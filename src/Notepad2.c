@@ -628,7 +628,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInst,LPSTR lpCmdLine,int n
 
   // Command Line Help Dialog
   if (flagDisplayHelp) {
-    DisplayCmdLineHelp();
+    DisplayCmdLineHelp(NULL);
     return(0);
   }
 
@@ -2054,6 +2054,11 @@ void MsgInitMenu(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
   i = lstrlen(szCurFile);
   EnableCmd(hmenu,IDM_FILE_REVERT,i);
+  EnableCmd(hmenu, CMD_RELOADASCIIASUTF8, i);
+  EnableCmd(hmenu, CMD_RELOADANSI, i);
+  EnableCmd(hmenu, CMD_RELOADOEM, i);
+  EnableCmd(hmenu, CMD_RELOADNOFILEVARS, i);
+  EnableCmd(hmenu, CMD_RECODEDEFAULT, i);
   EnableCmd(hmenu,IDM_FILE_LAUNCH,i);
   EnableCmd(hmenu,IDM_FILE_PROPERTIES,i);
   EnableCmd(hmenu,IDM_FILE_CREATELINK,i);
@@ -2200,6 +2205,11 @@ void MsgInitMenu(HWND hwnd,WPARAM wParam,LPARAM lParam)
   EnableCmd(hmenu,BME_EDIT_BOOKMARKTOGGLE,i);
   EnableCmd(hmenu,BME_EDIT_BOOKMARKCLEAR,i);
 #endif
+  EnableCmd(hmenu, IDM_EDIT_DELETELINELEFT, i);
+  EnableCmd(hmenu, IDM_EDIT_DELETELINERIGHT, i);
+  EnableCmd(hmenu, CMD_CTRLBACK, i);
+  EnableCmd(hmenu, CMD_CTRLDEL, i);
+  EnableCmd(hmenu, CMD_TIMESTAMPS, i);
   EnableCmd(hmenu,IDM_VIEW_TOGGLEFOLDS,i && bShowCodeFolding);
   CheckCmd(hmenu,IDM_VIEW_FOLDING,bShowCodeFolding);
 
@@ -3661,9 +3671,6 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         }
         else
         {
-            // define (behöver bara göra detta en gång egentligen)
-            //SendMessage( hwndEdit , SCI_MARKERSETBACK , 0 , 74 | (203 << 8) | (0 << 16) ); //behöver bara göra detta en gång egentligen
-            //SendMessage( hwndEdit , SCI_MARKERDEFINE , 0 , SC_MARK_ARROWS );    //behöver bara göra detta en gång egentligen
 
             if( bShowSelectionMargin )
             {
@@ -3676,13 +3683,8 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
                 SendMessage( hwndEdit , SCI_MARKERDEFINE , 0 , SC_MARK_BACKGROUND );
             }
 
-
-            //SendMessage( hwndEdit , SCI_MARKERSETBACK , 0 , 180 | (255 << 8) | (180 << 16) ); //behöver bara göra detta en gång egentligen
-            //SendMessage( hwndEdit , SCI_MARKERDEFINE , 0 , SC_MARK_BACKGROUND );    //behöver bara göra detta en gång egentligen
-
             // set
             SendMessage( hwndEdit , SCI_MARKERADD , iLine , 0 );
-            //SendMessage( hwndEdit , SCI_MARKERADD , iLine , 1 );
         }
 
         break;
@@ -4348,6 +4350,11 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
     case IDM_HELP_ABOUT:
       ThemedDialogBox(g_hInstance,MAKEINTRESOURCE(IDD_ABOUT),
         hwnd,AboutDlgProc);
+      break;
+
+
+    case IDM_CMDLINE_HELP:
+      DisplayCmdLineHelp(hwnd);
       break;
 
 
