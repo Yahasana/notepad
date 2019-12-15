@@ -2,7 +2,7 @@
 
 I'm a too old coder and like light weight and fast editor to replace the ugly and poor feature `notepad` in windows. that is why I create this fork to build a sexy notepad. I guss you will like it too if you are a old man.
 
-## [Screenshots](https://github.com/Yahasana/notepad/screenshot)
+## [Screenshots](https://raw.githubusercontent.com/Yahasana/notepad/master/screenshot.png)
 
 # Notepad2-mod
 
