@@ -69,27 +69,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>..\bin\VS2017\$(Configuration)_x86\obj\</IntDir>
+    <IntDir>..\bin\VS2019\$(Configuration)_x86\obj\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\VS2017\$(Configuration)_x86\</OutDir>
+    <OutDir>..\bin\VS2019\$(Configuration)_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>..\bin\VS2017\$(Configuration)_x86\obj\</IntDir>
+    <IntDir>..\bin\VS2019\$(Configuration)_x86\obj\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\VS2017\$(Configuration)_x86\</OutDir>
+    <OutDir>..\bin\VS2019\$(Configuration)_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>..\bin\$(Configuration)_x64\obj\</IntDir>
+    <IntDir>..\bin\VS2019\$(Configuration)_x64\obj\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\$(Configuration)_x64\</OutDir>
+    <OutDir>..\bin\VS2019\$(Configuration)_x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <IntDir>..\bin\VS2017\$(Configuration)_x64\obj\</IntDir>
+    <IntDir>..\bin\VS2019\$(Configuration)_x64\obj\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\VS2017\$(Configuration)_x64\</OutDir>
+    <OutDir>..\bin\VS2019\$(Configuration)_x64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -240,6 +240,9 @@
     <ProjectReference Include="..\scintilla\Scintilla.vcxproj">
       <Project>{5877b917-512b-49f5-b514-1b4159e7a9ca}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\res\notepad.exe.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

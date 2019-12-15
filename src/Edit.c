@@ -1230,7 +1230,7 @@ BOOL EditLoadFile(
   dwBufSize  = dwFileSize + 10;
 
   // Check if a warning message should be displayed for large files
-  dwFileSizeLimit = IniGetInt(L"Settings2",L"FileLoadWarningMB",1);
+  dwFileSizeLimit = IniGetInt(L"Settings",L"FileLoadWarningMB",1);
   if (dwFileSizeLimit != 0 && dwFileSizeLimit * 1024 * 1024 < dwFileSize) {
     if (InfoBox(MBYESNO,L"MsgFileSizeWarning",IDS_WARNLOADBIGFILE) != IDYES) {
       CloseHandle(hFile);

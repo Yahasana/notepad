@@ -453,7 +453,7 @@ void SetWindowTransparentMode(HWND hwnd,BOOL bTransparentMode)
         GetWindowLongPtr(hwnd,GWL_EXSTYLE) | WS_EX_LAYERED);
 
       // get opacity level from registry
-      iAlphaPercent = IniGetInt(L"Settings2",L"OpacityLevel",75);
+      iAlphaPercent = IniGetInt(L"Settings",L"OpacityLevel",75);
       if (iAlphaPercent < 0 || iAlphaPercent > 100)
         iAlphaPercent = 75;
       bAlpha = iAlphaPercent * 255 / 100;

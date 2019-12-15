@@ -218,7 +218,7 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd,UINT umsg,WPARAM wParam,LPARAM lParam)
         LOGFONT lf;
 
         SetDlgItemText(hwnd,IDC_VERSION,VERSION_FILEVERSION_LONG);
-        SetDlgItemText(hwnd,IDC_COPYRIGHT,VERSION_LEGALCOPYRIGHT_SHORT);
+        SetDlgItemText(hwnd,IDC_SCINTILLA, VERSION_SCINTILLA);
         SetDlgItemText(hwnd,IDC_AUTHORNAME,VERSION_AUTHORNAME);
         SetDlgItemText(hwnd,IDC_COMPILER,VERSION_COMPILER);
 
@@ -251,12 +251,21 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd,UINT umsg,WPARAM wParam,LPARAM lParam)
         }
 
         if (GetDlgItem(hwnd,IDC_MOD_PAGE) == NULL) {
-          SetDlgItemText(hwnd,IDC_MOD_PAGE,VERSION_MODPAGEDISPLAY);
-          ShowWindow(GetDlgItem(hwnd,IDC_MOD_PAGE2),SW_SHOWNORMAL);
+          SetDlgItemText(hwnd,IDC_MOD_PAGE, VERSION_MOD_PAGE);
+          ShowWindow(GetDlgItem(hwnd,IDC_MOD_PAGE),SW_SHOWNORMAL);
         }
         else {
-          wsprintf(wch,L"<A>%s</A>",VERSION_MODPAGEDISPLAY);
+          wsprintf(wch,L"<A>%s</A>", VERSION_MOD_PAGE);
           SetDlgItemText(hwnd,IDC_MOD_PAGE,wch);
+        }
+
+        if (GetDlgItem(hwnd, IDC_MOD_PAGE2) == NULL) {
+            SetDlgItemText(hwnd, IDC_MOD_PAGE2, VERSION_MOD_PAGE2);
+            ShowWindow(GetDlgItem(hwnd, IDC_MOD_PAGE2), SW_SHOWNORMAL);
+        }
+        else {
+            wsprintf(wch, L"<A>%s</A>", VERSION_MOD_PAGE2);
+            SetDlgItemText(hwnd, IDC_MOD_PAGE2, wch);
         }
 
         CenterDlgInParent(hwnd);
@@ -270,17 +279,27 @@ INT_PTR CALLBACK AboutDlgProc(HWND hwnd,UINT umsg,WPARAM wParam,LPARAM lParam)
 
           case NM_CLICK:
           case NM_RETURN:
-            {
-              if (pnmhdr->idFrom == IDC_WEBPAGE) {
-                ShellExecute(hwnd,L"open",L"http://www.flos-freeware.ch",NULL,NULL,SW_SHOWNORMAL);
+              switch (pnmhdr->idFrom)
+              {
+              case IDC_WEBPAGE:
+                  ShellExecute(hwnd, L"open", L"http://www.flos-freeware.ch", NULL, NULL, SW_SHOWNORMAL); 
+                  break;
+              case IDC_WEBPAGE2:
+                  ShellExecute(hwnd, L"open", L"https://www.scintilla.org", NULL, NULL, SW_SHOWNORMAL);
+                  break;
+              case IDC_MOD_PAGE2:
+                  ShellExecute(hwnd, L"open", L"https://yahasana.github.io/notepad", NULL, NULL, SW_SHOWNORMAL);
+                  break;
+              case IDC_MOD_PAGE:
+                  ShellExecute(hwnd, L"open", L"https://github.com/XhmikosR/notepad2-mod", NULL, NULL, SW_SHOWNORMAL);
+                  break;
+              case IDC_EMAIL2:
+                  ShellExecute(hwnd, L"open", L"mailto:xhmikosr@gmail.com", NULL, NULL, SW_SHOWNORMAL);
+                  break;
+              case IDC_EMAIL:
+                  ShellExecute(hwnd, L"open", L"mailto:florian.balmer@gmail.com", NULL, NULL, SW_SHOWNORMAL);
+                  break;
               }
-              else if (pnmhdr->idFrom == IDC_EMAIL) {
-                ShellExecute(hwnd,L"open",L"mailto:florian.balmer@gmail.com",NULL,NULL,SW_SHOWNORMAL);
-              }
-              else if (pnmhdr->idFrom == IDC_MOD_PAGE) {
-                ShellExecute(hwnd,L"open",L"https://yahasana.github.io/notepad/",NULL,NULL,SW_SHOWNORMAL);
-              }
-            }
             break;
         }
       }

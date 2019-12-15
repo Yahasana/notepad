@@ -1,8 +1,9 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by Notepad2.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 Notepad2.rc 使用
 //
-#define IDC_STATIC                      -1
+#define VERSION_MINOR                   12
+#define VERSION_BUILD                   12
 #define IDR_MAINWND                     100
 #define IDC_FINDTEXT                    100
 #define IDC_LINENUM                     100
@@ -34,7 +35,6 @@
 #define IDC_RESIZEGRIP4                 101
 #define IDC_NOUNICODEDETECTION          101
 #define IDC_COPYRIGHT                   101
-#define IDC_MOD_PAGE                    112
 #define IDC_STYLEEDIT                   102
 #define IDC_FINDCASE                    102
 #define IDC_OPENWITHDESCR               102
@@ -84,6 +84,7 @@
 #define IDC_IMPORT                      110
 #define IDD_MODIFYLINES                 111
 #define IDC_EXPORT                      111
+#define IDC_MOD_PAGE                    112
 #define IDC_REPLACE                     112
 #define IDC_TITLE                       112
 #define IDD_ALIGN                       112
@@ -124,6 +125,12 @@
 #define IDC_NFOASOEM                    300
 #define IDC_COMPILER                    301
 #define IDC_COMPILER2                   302
+#define IDC_COMPILER3                   303
+#define IDC_SCINTILLA3                  303
+#define IDC_COMPILER4                   304
+#define IDC_SCINTILLA                   304
+#define VERSION_REV                     999
+#define VERSION_MAJOR                   2019
 #define IDS_APPTITLE                    10000
 #define IDS_APPTITLE_ELEVATED           10001
 #define IDS_APPTITLE_PASTEBOARD         10002
@@ -425,9 +432,10 @@
 #define IDS_SETTINGSNOTSAVED            50039
 #define IDS_EXPORT_FAIL                 50040
 #define IDS_CMDLINEHELP                 60000
+#define IDC_STATIC                      -1
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

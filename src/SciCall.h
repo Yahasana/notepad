@@ -107,13 +107,22 @@ DeclareSciCallR1(StyleGetBack, STYLEGETBACK, COLORREF, int, styleNumber);
 //  Margins
 //
 //
-DeclareSciCallV2(SetMarginType, SETMARGINTYPEN, int, margin, int, type);
-DeclareSciCallV2(SetMarginWidth, SETMARGINWIDTHN, int, margin, int, pixelWidth);
-DeclareSciCallV2(SetMarginMask, SETMARGINMASKN, int, margin, int, mask);
-DeclareSciCallV2(SetMarginSensitive, SETMARGINSENSITIVEN, int, margin, BOOL, sensitive);
+//DeclareSciCallV2(SetMarginType, SETMARGINTYPEN, int, margin, int, type);
+//DeclareSciCallV2(SetMarginWidth, SETMARGINWIDTHN, int, margin, int, pixelWidth);
+//DeclareSciCallV2(SetMarginMask, SETMARGINMASKN, int, margin, int, mask);
+//DeclareSciCallV2(SetMarginSensitive, SETMARGINSENSITIVEN, int, margin, BOOL, sensitive);
 DeclareSciCallV2(SetFoldMarginColour, SETFOLDMARGINCOLOUR, BOOL, useSetting, COLORREF, colour);
 DeclareSciCallV2(SetFoldMarginHiColour, SETFOLDMARGINHICOLOUR, BOOL, useSetting, COLORREF, colour);
 
+DeclareSciCallV2(SetMarginTypeN, SETMARGINTYPEN, int, margin, int, type);
+DeclareSciCallR1(GetMarginWidthN, GETMARGINWIDTHN, int, int, margin);
+DeclareSciCallV2(SetMarginWidthN, SETMARGINWIDTHN, int, margin, int, pixelWidth);
+DeclareSciCallV2(SetMarginMaskN, SETMARGINMASKN, int, margin, int, mask);
+DeclareSciCallV2(SetMarginSensitiveN, SETMARGINSENSITIVEN, int, margin, BOOL, sensitive);
+DeclareSciCallV2(SetMarginBackN, SETMARGINBACKN, int, margin, COLORREF, colour);
+DeclareSciCallV2(SetMarginCursorN, SETMARGINCURSORN, int, margin, int, cursor);
+DeclareSciCallV1(MarkerEnableHighlight, MARKERENABLEHIGHLIGHT, BOOL, flag);
+DeclareSciCallR2(TextWidth, TEXTWIDTH, int, int, styleNumber, const char*, text);
 
 //=============================================================================
 //
@@ -123,6 +132,9 @@ DeclareSciCallV2(SetFoldMarginHiColour, SETFOLDMARGINHICOLOUR, BOOL, useSetting,
 DeclareSciCallV2(MarkerDefine, MARKERDEFINE, int, markerNumber, int, markerSymbols);
 DeclareSciCallV2(MarkerSetFore, MARKERSETFORE, int, markerNumber, COLORREF, colour);
 DeclareSciCallV2(MarkerSetBack, MARKERSETBACK, int, markerNumber, COLORREF, colour);
+DeclareSciCallV2(MarkerSetAlpha, MARKERSETALPHA, int, markerNumber, int, alpha);
+DeclareSciCallV1(MarkerDeleteAll, MARKERDELETEALL, int, markerNumber);
+DeclareSciCallV2(MarkerSetBackSelected, MARKERSETBACKSELECTED, int, markerNumber, COLORREF, colour);
 
 
 //=============================================================================

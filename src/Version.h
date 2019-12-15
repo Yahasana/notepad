@@ -37,20 +37,23 @@
 #define VERSION_FILEVERSION_NUM      VERSION_MAJOR,VERSION_MINOR,VERSION_BUILD,VERSION_REV
 #define VERSION_FILEVERSION          STRINGIFY(VERSION_MAJOR) "." STRINGIFY(VERSION_MINOR) "." \
                                      STRINGIFY(VERSION_BUILD) "." STRINGIFY(VERSION_REV)
+
 #define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright ? 2004-2019"
 #define VERSION_LEGALCOPYRIGHT_LONG  L"Florian Balmer 2004-2016"
 #define VERSION_AUTHORNAME           L"Sam Sanchez"
-#define VERSION_WEBPAGEDISPLAY       L"flo's freeware - http://www.flos-freeware.ch"
-#define VERSION_EMAILDISPLAY         L"samsanchez@qq.com"
+#define VERSION_SCINTILLA            L"v4.2.3"
+#define VERSION_EMAILDISPLAY         L""
 #define VERSION_COMPANYNAME          L"Notepad Org"
-#define VERSION_MODPAGEDISPLAY       L"https://yahasana.github.io/notepad/"
+#define VERSION_WEBPAGEDISPLAY       L"http://www.flos-freeware.ch"
+#define VERSION_MOD_PAGE             L"https://github.com/XhmikosR/notepad2-mod"
+#define VERSION_MOD_PAGE2            L"https://github.com/yahasana/notepad"
 
 #if defined(_WIN64)
    #define VERSION_FILEVERSION_LONG  L"notepad (x64) " STRINGIFY(VERSION_MAJOR) L"." \
-                                     STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD)
-//\                                     L" r" STRINGIFY(VERSION_REV)
+                                     STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD) \
+                                     L" r" STRINGIFY(VERSION_REV)
 #else
-   #define VERSION_FILEVERSION_LONG  L"Notepad " STRINGIFY(VERSION_MAJOR) L"."         \
+   #define VERSION_FILEVERSION_LONG  L"notepad " STRINGIFY(VERSION_MAJOR) L"."         \
                                      STRINGIFY(VERSION_MINOR) L"." STRINGIFY(VERSION_BUILD) 
 //\                                  L" r" STRINGIFY(VERSION_REV)
 #endif

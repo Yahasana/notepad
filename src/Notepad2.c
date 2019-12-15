@@ -828,7 +828,7 @@ HWND InitInstance(HINSTANCE hInstance,LPSTR pszCmdLine,int nCmdShow)
   hwndMain = CreateWindowEx(
                0,
                wchWndClass,
-               L"Notepad2",
+               L"notepad",
                WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
                wi.x,
                wi.y,
@@ -1618,10 +1618,10 @@ LRESULT MsgCreate(HWND hwnd,WPARAM wParam,LPARAM lParam)
   //  (bShowLineNumbers)?SendMessage(hwndEdit,SCI_TEXTWIDTH,STYLE_LINENUMBER,(LPARAM)L"_999999_"):0);
 
   // Code folding
-  SciCall_SetMarginType(MARGIN_FOLD_INDEX, SC_MARGIN_SYMBOL);
-  SciCall_SetMarginMask(MARGIN_FOLD_INDEX, SC_MASK_FOLDERS);
-  SciCall_SetMarginWidth(MARGIN_FOLD_INDEX, (bShowCodeFolding) ? 11 : 0);
-  SciCall_SetMarginSensitive(MARGIN_FOLD_INDEX, TRUE);
+  SciCall_SetMarginWidthN(MARGIN_FOLD_INDEX, (bShowCodeFolding) ? 11 : 0);
+  SciCall_SetMarginTypeN(MARGIN_SCI_FOLDING, SC_MARGIN_COLOUR);
+  SciCall_SetMarginMaskN(MARGIN_SCI_FOLDING, SC_MASK_FOLDERS);
+  SciCall_SetMarginSensitiveN(MARGIN_SCI_FOLDING, TRUE);
   SciCall_MarkerDefine(SC_MARKNUM_FOLDEROPEN, SC_MARK_BOXMINUS);
   SciCall_MarkerDefine(SC_MARKNUM_FOLDER, SC_MARK_BOXPLUS);
   SciCall_MarkerDefine(SC_MARKNUM_FOLDERSUB, SC_MARK_VLINE);
@@ -1630,6 +1630,7 @@ LRESULT MsgCreate(HWND hwnd,WPARAM wParam,LPARAM lParam)
   SciCall_MarkerDefine(SC_MARKNUM_FOLDEROPENMID, SC_MARK_BOXMINUSCONNECTED);
   SciCall_MarkerDefine(SC_MARKNUM_FOLDERMIDTAIL, SC_MARK_TCORNER);
   SciCall_SetFoldFlags(16);
+  SciCall_MarkerEnableHighlight(TRUE);
 
   // Nonprinting characters
   SendMessage(hwndEdit,SCI_SETVIEWWS,(bViewWhiteSpace)?SCWS_VISIBLEALWAYS:SCWS_INVISIBLE,0);
@@ -2252,11 +2253,11 @@ void MsgInitMenu(HWND hwnd,WPARAM wParam,LPARAM lParam)
   CheckCmd(hmenu,IDM_VIEW_AUTOCLOSETAGS,bAutoCloseTags /*&& (i == SCLEX_HTML || i == SCLEX_XML)*/);
   CheckCmd(hmenu,IDM_VIEW_HILITECURRENTLINE,bHiliteCurrentLine);
 
-  i = IniGetInt(L"Settings2",L"ReuseWindow",0);
+  i = IniGetInt(L"Settings",L"ReuseWindow",0);
   CheckCmd(hmenu,IDM_VIEW_REUSEWINDOW,i);
-  i = IniGetInt(L"Settings2",L"SingleFileInstance",0);
+  i = IniGetInt(L"Settings",L"SingleFileInstance",0);
   CheckCmd(hmenu,IDM_VIEW_SINGLEFILEINSTANCE,i);
-  bStickyWinPos = IniGetInt(L"Settings2",L"StickyWindowPosition",0);
+  bStickyWinPos = IniGetInt(L"Settings",L"StickyWindowPosition",1);
   CheckCmd(hmenu,IDM_VIEW_STICKYWINPOS,bStickyWinPos);
   CheckCmd(hmenu,IDM_VIEW_ALWAYSONTOP,((bAlwaysOnTop || flagAlwaysOnTop == 2) && flagAlwaysOnTop != 1));
   CheckCmd(hmenu,IDM_VIEW_MINTOTRAY,bMinimizeToTray);
@@ -2414,7 +2415,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         WCHAR tchExeFile[MAX_PATH+4];
         WCHAR tchTemp[MAX_PATH+4];
 
-        if (!IniGetString(L"Settings2",L"filebrowser.exe",L"",tchTemp,COUNTOF(tchTemp))) {
+        if (!IniGetString(L"Settings",L"filebrowser.exe",L"",tchTemp,COUNTOF(tchTemp))) {
           if (!SearchPath(NULL,L"metapath.exe",NULL,COUNTOF(tchExeFile),tchExeFile,NULL)) {
             GetModuleFileName(NULL,tchExeFile,COUNTOF(tchExeFile));
             PathRemoveFileSpec(tchExeFile);
@@ -3321,7 +3322,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
         GetLocalTime(&st);
 
-        if (IniGetString(L"Settings2",
+        if (IniGetString(L"Settings",
               (LOWORD(wParam) == IDM_EDIT_INSERT_SHORTDATE) ? L"DateTimeShort" : L"DateTimeLong",
               L"",tchTemplate,COUNTOF(tchTemplate))) {
           struct tm sst;
@@ -4016,7 +4017,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
     case IDM_VIEW_FOLDING:
       bShowCodeFolding = (bShowCodeFolding) ? FALSE : TRUE;
-      SciCall_SetMarginWidth(MARGIN_FOLD_INDEX, (bShowCodeFolding) ? 11 : 0);
+      SciCall_SetMarginWidthN(MARGIN_FOLD_INDEX, (bShowCodeFolding) ? 11 : 0);
       UpdateToolbar();
       if (!bShowCodeFolding)
         FoldToggleAll(EXPAND);
@@ -4142,7 +4143,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
 
     case IDM_VIEW_STICKYWINPOS:
-      bStickyWinPos = IniGetInt(L"Settings2",L"StickyWindowPosition",bStickyWinPos);
+      bStickyWinPos = IniGetInt(L"Settings",L"StickyWindowPosition",bStickyWinPos);
       if (!bStickyWinPos) {
         WINDOWPLACEMENT wndpl;
         WCHAR tchPosX[32], tchPosY[32], tchSizeX[32], tchSizeY[32], tchMaximized[32];
@@ -4167,7 +4168,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         wsprintf(tchMaximized,L"%ix%i Maximized",ResX,ResY);
 
         bStickyWinPos = 1;
-        IniSetInt(L"Settings2",L"StickyWindowPosition",1);
+        IniSetInt(L"Settings",L"StickyWindowPosition",1);
 
         IniSetInt(L"Window",tchPosX,wi.x);
         IniSetInt(L"Window",tchPosY,wi.y);
@@ -4179,24 +4180,24 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
       }
       else {
         bStickyWinPos = 0;
-        IniSetInt(L"Settings2",L"StickyWindowPosition",0);
+        IniSetInt(L"Settings",L"StickyWindowPosition",0);
       }
       break;
 
 
     case IDM_VIEW_REUSEWINDOW:
-      if (IniGetInt(L"Settings2",L"ReuseWindow",0))
-        IniSetInt(L"Settings2",L"ReuseWindow",0);
+      if (IniGetInt(L"Settings",L"ReuseWindow",0))
+        IniSetInt(L"Settings",L"ReuseWindow",0);
       else
-        IniSetInt(L"Settings2",L"ReuseWindow",1);
+        IniSetInt(L"Settings",L"ReuseWindow",1);
       break;
 
 
     case IDM_VIEW_SINGLEFILEINSTANCE:
-      if (IniGetInt(L"Settings2",L"SingleFileInstance",0))
-        IniSetInt(L"Settings2",L"SingleFileInstance",0);
+      if (IniGetInt(L"Settings",L"SingleFileInstance",0))
+        IniSetInt(L"Settings",L"SingleFileInstance",0);
       else
-        IniSetInt(L"Settings2",L"SingleFileInstance",1);
+        IniSetInt(L"Settings",L"SingleFileInstance",1);
       break;
 
 
@@ -4540,7 +4541,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
         UINT cp;
         EDITFINDREPLACE efrTS = { "", "", "", "", SCFIND_REGEXP, 0, 0, 0, 0, 0, hwndEdit };
 
-        IniGetString(L"Settings2",L"TimeStamp",L"\\$Date:[^\\$]+\\$ | $Date: %Y/%m/%d %H:%M:%S $",wchFind,COUNTOF(wchFind));
+        IniGetString(L"Settings",L"TimeStamp",L"\\$Date:[^\\$]+\\$ | $Date: %Y/%m/%d %H:%M:%S $",wchFind,COUNTOF(wchFind));
 
         if (pwchSep = StrChr(wchFind,L'|')) {
           lstrcpy(wchTemplate,pwchSep+1);
@@ -4594,7 +4595,7 @@ LRESULT MsgCommand(HWND hwnd,WPARAM wParam,LPARAM lParam)
 
         lpszTemplateName = (LOWORD(wParam) == CMD_WEBACTION1) ? L"WebTemplate1" : L"WebTemplate2";
 
-        bCmdEnabled = IniGetString(L"Settings2",lpszTemplateName,L"",szCmdTemplate,COUNTOF(szCmdTemplate));
+        bCmdEnabled = IniGetString(L"Settings",lpszTemplateName,L"",szCmdTemplate,COUNTOF(szCmdTemplate));
 
         if (bCmdEnabled) {
 
@@ -5728,7 +5729,7 @@ void LoadSettings()
   xFindReplaceDlg = IniSectionGetInt(pIniSection,L"FindReplaceDlgPosX",0);
   yFindReplaceDlg = IniSectionGetInt(pIniSection,L"FindReplaceDlgPosY",0);
 
-  LoadIniSection(L"Settings2",pIniSection,cchIniSection);
+  LoadIniSection(L"Settings",pIniSection,cchIniSection);
 
   bStickyWinPos = IniSectionGetInt(pIniSection,L"StickyWindowPosition",0);
   if (bStickyWinPos) bStickyWinPos = 1;
@@ -5925,7 +5926,7 @@ void SaveSettings(BOOL bSaveSettingsNow)
     wi.max = (IsZoomed(hwndMain) || (wndpl.flags & WPF_RESTORETOMAXIMIZED));
   }
 
-  if (!IniGetInt(L"Settings2",L"StickyWindowPosition",0)) {
+  if (!IniGetInt(L"Settings",L"StickyWindowPosition",0)) {
 
     WCHAR tchPosX[32], tchPosY[32], tchSizeX[32], tchSizeY[32], tchMaximized[32];
 
@@ -6347,7 +6348,7 @@ void LoadFlags()
   WCHAR *pIniSection = LocalAlloc(LPTR,sizeof(WCHAR)*32*1024);
   int   cchIniSection = (int)LocalSize(pIniSection)/sizeof(WCHAR);
 
-  LoadIniSection(L"Settings2",pIniSection,cchIniSection);
+  LoadIniSection(L"Settings",pIniSection,cchIniSection);
 
   if (!flagReuseWindow && !flagNoReuseWindow) {
 
@@ -6446,7 +6447,7 @@ int CheckIniFile(LPWSTR lpszFile,LPCWSTR lpszModule)
 int CheckIniFileRedirect(LPWSTR lpszFile,LPCWSTR lpszModule)
 {
   WCHAR tch[MAX_PATH];
-  if (GetPrivateProfileString(L"notepad",L"notepad.ini",L"",tch,COUNTOF(tch),lpszFile)) {
+  if (GetPrivateProfileString(L"Notepad",L"notepad.ini",L"",tch,COUNTOF(tch),lpszFile)) {
     if (CheckIniFile(tch,lpszModule)) {
       lstrcpy(lpszFile,tch);
       return(1);
@@ -6570,12 +6571,12 @@ int CreateIniFileEx(LPCWSTR lpszIniFile) {
 
     hFile = CreateFile(lpszIniFile,
               GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,
-              NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+              NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL | FILE_ATTRIBUTE_HIDDEN,NULL);
     dwLastIOError = GetLastError();
     if (hFile != INVALID_HANDLE_VALUE) {
       if (GetFileSize(hFile,NULL) == 0) {
         DWORD dw;
-        WriteFile(hFile,(LPCVOID)L"\xFEFF[notepad]\r\n",26,&dw,NULL);
+        WriteFile(hFile,(LPCVOID)L"\xFEFF[Notepad]\r\n",26,&dw,NULL);
       }
       CloseHandle(hFile);
       return(1);
@@ -7693,7 +7694,7 @@ void ShowNotifyIcon(HWND hwnd,BOOL bAdd)
   nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
   nid.uCallbackMessage = WM_TRAYMESSAGE;
   nid.hIcon = hIcon;
-  lstrcpy(nid.szTip,L"Notepad2");
+  lstrcpy(nid.szTip,L"notepad");
 
   if(bAdd)
     Shell_NotifyIcon(NIM_ADD,&nid);

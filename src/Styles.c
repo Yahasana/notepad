@@ -49,7 +49,7 @@ KEYWORDLIST KeyWords_NULL = {
 EDITLEXER lexDefault = { SCLEX_NULL, 63000, L"Default Text", L"txt; text; wtx; log; asc; doc", L"", &KeyWords_NULL, {
                 /*  0 */ { STYLE_DEFAULT, 63100, L"Default Style", L"font:Consolas; size:11; back:#F8F8F8", L"" },
                 /*  1 */ { STYLE_LINENUMBER, 63101, L"Margins and Line Numbers", L"size:-3; fore:#6F6B63; back:#F0F0F0", L"" },
-                /*  2 */ { STYLE_BRACELIGHT, 63102, L"Matching Braces", L"size:+1; bold; fore:#FF0000", L"" },
+                /*  2 */ { STYLE_BRACELIGHT, 63102, L"Matching Braces", L"size:+1; bold; fore:#00755E", L"" },
                 /*  3 */ { STYLE_BRACEBAD, 63103, L"Matching Braces Error", L"size:+1; bold; fore:#000080", L"" },
                 /*  4 */ { STYLE_CONTROLCHAR, 63104, L"Control Characters (Font)", L"size:-1", L"" },
                 /*  5 */ { STYLE_INDENTGUIDE, 63105, L"Indentation Guide (Color)", L"fore:#A0A0A0", L"" },
@@ -61,8 +61,8 @@ EDITLEXER lexDefault = { SCLEX_NULL, 63000, L"Default Text", L"txt; text; wtx; l
                 /* 11 */ { SCI_SETEXTRAASCENT+SCI_SETEXTRADESCENT, 63111, L"Extra Line Spacing (Size)", L"size:2", L"" },
 
                 /* 12 */ { STYLE_DEFAULT, 63112, L"2nd Default Style", L"font:Courier New; size:10", L"" },
-                /* 13 */ { STYLE_LINENUMBER, 63113, L"2nd Margins and Line Numbers", L"font:Tahoma; size:-2; fore:#FF0000", L"" },
-                /* 14 */ { STYLE_BRACELIGHT, 63114, L"2nd Matching Braces", L"bold; fore:#FF0000", L"" },
+                /* 13 */ { STYLE_LINENUMBER, 63113, L"2nd Margins and Line Numbers", L"font:Tahoma; size:-2; fore:#F0F0F0", L"" },
+                /* 14 */ { STYLE_BRACELIGHT, 63114, L"2nd Matching Braces", L"bold; fore:#F4DB6E", L"" },
                 /* 15 */ { STYLE_BRACEBAD, 63115, L"2nd Matching Braces Error", L"bold; fore:#000080", L"" },
                 /* 16 */ { STYLE_CONTROLCHAR, 63116, L"2nd Control Characters (Font)", L"size:-1", L"" },
                 /* 17 */ { STYLE_INDENTGUIDE, 63117, L"2nd Indentation Guide (Color)", L"fore:#A0A0A0", L"" },
@@ -2646,12 +2646,13 @@ void Style_Load()
   }
 
   LoadIniSection(L"Styles",pIniSection,cchIniSection);
-  // 2nd default
-  bUse2ndDefaultStyle = (IniSectionGetInt(pIniSection,L"Use2ndDefaultStyle",0)) ? 1 : 0;
 
   // default scheme
-  iDefaultLexer = IniSectionGetInt(pIniSection,L"DefaultScheme",0);
+  iDefaultLexer = IniSectionGetInt(pIniSection,L"DefaultScheme",1);
   iDefaultLexer = min(max(iDefaultLexer,0),NUMLEXERS-1);
+
+  // 2nd default
+  bUse2ndDefaultStyle = (IniSectionGetInt(pIniSection,L"Use2ndDefaultStyle",0)) ? 1 : 0;
 
   // auto select
   bAutoSelect = (IniSectionGetInt(pIniSection,L"AutoSelect",1)) ? 1 : 0;
@@ -2884,14 +2885,6 @@ void Style_SetLexer(HWND hwnd,PEDITLEXER pLexNew)
   else if (pLexNew->iLexer == SCLEX_NSIS)
     SciCall_SetProperty("nsis.ignorecase", "1");
 
-  // Code folding
-  SciCall_SetProperty("fold", "1");
-  SciCall_SetProperty("fold.compact", "0");
-  SciCall_SetProperty("fold.comment", "1");
-  SciCall_SetProperty("fold.html", "1");
-  SciCall_SetProperty("fold.preprocessor", "1");
-  SciCall_SetProperty("fold.cpp.comment.explicit", "0");
-
   // Add KeyWord Lists
   for (i = 0; i < 9; i++)
     SendMessage(hwnd,SCI_SETKEYWORDS,i,(LPARAM)pLexNew->pKeyWords->pszKeyWords[i]);
@@ -3100,7 +3093,40 @@ void Style_SetLexer(HWND hwnd,PEDITLEXER pLexNew)
     //wsprintf(lexDefault.Styles[11+iIdx].szValue,L"size:0");
   }
 
-  { // set folding style; braces are for scoping only
+  { // Code folding folding style; braces are for scoping only
+
+    SciCall_SetProperty("fold", "1");
+    SciCall_SetProperty("fold.comment", "1");
+    SciCall_SetProperty("fold.compact", "0");
+    SciCall_SetProperty("fold.foldsyntaxbased", "1");
+    SciCall_SetProperty("fold.html", "1");
+    SciCall_SetProperty("fold.preprocessor", "1");
+    SciCall_SetProperty("fold.cpp.comment.explicit", "0");
+
+    int i;
+    // ---  Code folding  ---
+
+    COLORREF clrFore = 0;
+
+    COLORREF clrBack = SciCall_StyleGetBack(1 + iIdx);
+
+    if (Style_StrGetColor(TRUE, lexDefault.Styles[5 + iIdx].szValue, &rgb)) { // Indentation Guide
+        clrFore = rgb;
+    }
+    else {
+        // Set marker color to the average of clrFore and clrBack
+        clrFore = (((clrFore & 0xFF0000) + (clrBack & 0xFF0000)) >> 1 & 0xFF0000) |
+            (((clrFore & 0x00FF00) + (clrBack & 0x00FF00)) >> 1 & 0x00FF00) |
+            (((clrFore & 0x0000FF) + (clrBack & 0x0000FF)) >> 1 & 0x0000FF);
+
+        // Rounding hack for pure white against pure black
+        if (clrFore == 0x7F7F7F) clrFore = 0x808080;
+    }
+
+    if (!Style_StrGetColor(TRUE, lexDefault.Styles[2 + iIdx].szValue, &rgb)) { // brace light
+        rgb = 0xAA0000;
+    }
+
     static const int iMarkerIDs[] =
     {
       SC_MARKNUM_FOLDEROPEN,
@@ -3112,31 +3138,16 @@ void Style_SetLexer(HWND hwnd,PEDITLEXER pLexNew)
       SC_MARKNUM_FOLDERMIDTAIL
     };
 
-    int i;
-
-    COLORREF clrFore = SciCall_StyleGetFore(STYLE_DEFAULT);
-    COLORREF clrBack = SciCall_StyleGetBack(STYLE_DEFAULT);
-
-    SciCall_SetFoldMarginColour(TRUE, clrBack);
-    SciCall_SetFoldMarginHiColour(TRUE, clrBack);
-
-    if (Style_StrGetColor(TRUE, lexDefault.Styles[5 + iIdx].szValue, &rgb)) { // Indentation Guide
-      clrFore = rgb;
-    } else {
-      // Set marker color to the average of clrFore and clrBack
-      clrFore = (((clrFore & 0xFF0000) + (clrBack & 0xFF0000)) >> 1 & 0xFF0000) |
-                (((clrFore & 0x00FF00) + (clrBack & 0x00FF00)) >> 1 & 0x00FF00) |
-                (((clrFore & 0x0000FF) + (clrBack & 0x0000FF)) >> 1 & 0x0000FF);
-
-      // Rounding hack for pure white against pure black
-      if (clrFore == 0x7F7F7F) clrFore = 0x808080;
-    }
-
     for (i = 0; i < COUNTOF(iMarkerIDs); ++i)
     {
-      SciCall_MarkerSetBack(iMarkerIDs[i], clrFore);
-      SciCall_MarkerSetFore(iMarkerIDs[i], clrBack);
+        SciCall_MarkerSetBack(iMarkerIDs[i], clrFore);
+        SciCall_MarkerSetFore(iMarkerIDs[i], clrBack);
+        SciCall_MarkerSetBackSelected(iMarkerIDs[i], rgb);
     }
+    SciCall_SetFoldMarginColour(TRUE, clrBack);    // background 0xFFFFFF
+    SciCall_SetFoldMarginHiColour(TRUE, clrBack);  //
+    //SciCall_FoldDisplayTextSetStyle(SC_FOLDDISPLAYTEXT_HIDDEN);
+
   } // end set folding style
 
   if (SendMessage(hwnd,SCI_GETINDENTATIONGUIDES,0,0) != SC_IV_NONE)
@@ -5193,5 +5204,9 @@ void Style_SelectLexerDlg(HWND hwnd)
     Style_SetLexer(hwnd,pLexCurrent);
 }
 
+PEDITLEXER GetCurrentStdLexer()
+{
+    return pLexCurrent;
+}
 
 // End of Styles.c
