@@ -1,3 +1,9 @@
+# notepad
+
+I'm a too old coder and like light weight and fast editor to replace the ugly and poor feature `notepad` in windows. that is why I create this fork to build a sexy notepad. I guss you will like it too if you are a old man.
+
+## [Screenshots](https://github.com/Yahasana/notepad/screenshot)
+
 # Notepad2-mod
 
 > *A modified version (fork) of Notepad2 based on Kai Liu's and other people's patches.*
@@ -20,8 +26,6 @@
 ## Supported Operating Systems:
 
 * XP (SP3, SP2 might or might not work), Vista, 7, 8, 8.1 and 10 both 32-bit and 64-bit
-
-## [Screenshots](https://xhmikosr.github.io/notepad2-mod/screenshots)
 
 ## Notes:
 
