@@ -159,6 +159,7 @@
     <ClCompile Include="src\DBCS.cxx" />
     <ClCompile Include="src\UniqueString.cxx" />
     <ClCompile Include="win32\ScintillaDLL.cxx" />
+    <ClCompile Include="lexers\LexRaku.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ILexer.h" />

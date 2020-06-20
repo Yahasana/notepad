@@ -28,9 +28,9 @@
 #define DO_STRINGIFY(x) _T(#x)
 #define STRINGIFY(x)    DO_STRINGIFY(x)
 
-#define VERSION_MAJOR   2019
-#define VERSION_MINOR   12
-#define VERSION_BUILD   12
+#define VERSION_MAJOR   2020
+#define VERSION_MINOR   6
+#define VERSION_BUILD   20
 #define VERSION_REV		999
 
 #define MY_APPNAME                   L"notepad"
@@ -41,7 +41,7 @@
 #define VERSION_LEGALCOPYRIGHT_SHORT L"Copyright ? 2004-2019"
 #define VERSION_LEGALCOPYRIGHT_LONG  L"Florian Balmer 2004-2016"
 #define VERSION_AUTHORNAME           L"Sam Sanchez"
-#define VERSION_SCINTILLA            L"v4.2.3"
+#define VERSION_SCINTILLA            L"v4.4.3"
 #define VERSION_EMAILDISPLAY         L""
 #define VERSION_COMPANYNAME          L"Notepad Org"
 #define VERSION_WEBPAGEDISPLAY       L"http://www.flos-freeware.ch"

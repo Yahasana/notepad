@@ -223,6 +223,7 @@
     <ClCompile Include="lexers\LexPS.cxx" />
     <ClCompile Include="lexers\LexPython.cxx" />
     <ClCompile Include="lexers\LexR.cxx" />
+    <ClCompile Include="lexers\LexRaku.cxx" />
     <ClCompile Include="lexers\LexRebol.cxx" />
     <ClCompile Include="lexers\LexRegistry.cxx" />
     <ClCompile Include="lexers\LexRuby.cxx" />
